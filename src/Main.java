@@ -26,12 +26,19 @@ public class Main {
     public static void main(String[] args) {
 
         // interpreting input arguments
-        int uniSize = Integer.parseInt(args[0]);
+        /*int uniSize = Integer.parseInt(args[0]);
         int setSize = Integer.parseInt(args[1]);
         int sampleSize = Integer.parseInt(args[2]);
         int numOfSampleRuns = Integer.parseInt(args[3]);
         int bloomVecLength = Integer.parseInt(args[4]);
-        int numOfHashFuncs = Integer.parseInt(args[5]);
+        int numOfHashFuncs = Integer.parseInt(args[5]);*/
+
+        int uniSize = 100;
+        int setSize = 8;
+        int sampleSize = 15;
+        int numOfSampleRuns = 1;
+        int bloomVecLength = 5;
+        int numOfHashFuncs = 2;
 
         // initializing bloom filter & simulation
         Bloom b1= new Bloom(bloomVecLength,numOfHashFuncs);

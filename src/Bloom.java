@@ -44,7 +44,7 @@ public class Bloom {
         return bloomArray[hash3(number)];
     }
 
-    public static void main(String[] args) {}
+    //public static void main(String[] args) {}
 
 }
 
