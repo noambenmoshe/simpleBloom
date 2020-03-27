@@ -14,7 +14,7 @@ public class Bloom {
         }
     }
 
-    int hash1(int number){
+    /*int hash1(int number){
         return number%m;
     }
     int hash2(int number){
@@ -22,26 +22,26 @@ public class Bloom {
     }
     int hash3(int number){
         return (number*number*number)%m;
-    }
+    }*/
 
     void Add(int number){
-        /*for (int i=0; i<k; i++){
-            bloomArray[(int)Math.pow(number,i)] = true;
-        }*/
-        bloomArray[hash1(number)] = true;
+        for (int i=1; i<=k; i++){
+            bloomArray[(int)Math.pow(number,i)%m] = true;
+        }
+        /*bloomArray[hash1(number)] = true;
         bloomArray[hash2(number)] = true;
-        bloomArray[hash3(number)] = true;
+        bloomArray[hash3(number)] = true;*/
     }
 
     boolean checkIfExists(int number){
-        /*for (int i=0; i<k; i++){
-            if (!bloomArray[(int)Math.pow(number,i)])
+        for (int i=1; i<=k; i++){
+            if (!bloomArray[(int)Math.pow(number,i)%m])
                 return false;
         }
-        return true;*/
-        if (!bloomArray[hash1(number)]) return false;
+        return true;
+        /*if (!bloomArray[hash1(number)]) return false;
         if (!bloomArray[hash2(number)]) return false;
-        return bloomArray[hash3(number)];
+        return bloomArray[hash3(number)];*/
     }
 
     //public static void main(String[] args) {}

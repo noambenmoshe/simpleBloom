@@ -34,10 +34,10 @@ public class Main {
         int numOfHashFuncs = Integer.parseInt(args[5]);*/
 
         int uniSize = 100;
-        int setSize = 8;
-        int sampleSize = 15;
-        int numOfSampleRuns = 1;
-        int bloomVecLength = 5;
+        int setSize = 2;
+        int sampleSize = 1;
+        int numOfSampleRuns = 5;
+        int bloomVecLength = 7;
         int numOfHashFuncs = 2;
 
         // initializing bloom filter & simulation
