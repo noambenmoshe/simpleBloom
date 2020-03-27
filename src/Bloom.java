@@ -7,6 +7,10 @@ public class Bloom {
     public Bloom(int length, int numOfFunc){
         m = length;
         k= numOfFunc;
+        boolean[] bloomArray = new boolean[m];
+        for( int i=0; i<m; i++){
+            bloomArray[i] = false;
+        }
     }
 
     int hash1(int number){
