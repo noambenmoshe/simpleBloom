@@ -7,20 +7,20 @@ public class Bloom {
     public Bloom(int length, int numOfFunc){
         m = length;
         k= numOfFunc;
-        boolean[] bloomArray = new boolean[m];
+        bloomArray = new boolean[m];
         for( int i=0; i<m; i++){
             bloomArray[i] = false;
         }
     }
 
     int hash1(int number){
-        return number%10;
+        return number%m;
     }
     int hash2(int number){
-        return (number*number)%10;
+        return (number*number)%m;
     }
     int hash3(int number){
-        return (number*number*number)%10;
+        return (number*number*number)%m;
     }
 
     void Add(int number){
@@ -33,8 +33,7 @@ public class Bloom {
         boolean flag = false;
         if (!bloomArray[hash1(number)]) return false;
         if (!bloomArray[hash2(number)]) return false;
-        if (!bloomArray[hash3(number)]) return false;
-        return true;
+        return bloomArray[hash3(number)];
     }
 
     public static void main(String[] args) {}
