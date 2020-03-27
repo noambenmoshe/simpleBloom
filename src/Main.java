@@ -23,7 +23,8 @@ public class Main {
         }
     }
 
-    public static void main(String[] args) {
+    public void main(String[] args) {
+
         // interpreting input arguments
         int uniSize = Integer.parseInt(args[1]);
         int setSize = Integer.parseInt(args[2]);
@@ -36,8 +37,16 @@ public class Main {
         Bloom b1= new Bloom(bloomVecLength,numOfHashFuncs);
         Simulation simulation= new Simulation(uniSize, setSize, sampleSize);
 
-        //
-        
-        System.out.println("Hello World");
+        // randomly choosing a set, updating simulation and adding to bloom filter
+        SetRandomizer(simulation,b1);
+
+        // running all checks
+        for (int i=0; i<numOfSampleRuns; i++){
+            SampleRandomizer(simulation,b1);
+            simulation.statistics();
+            simulation.falsePositiveCounterInitialize();
+        }
+
+        System.out.println("Done!");
     }
 }
