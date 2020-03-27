@@ -3,10 +3,10 @@ public class Simulation {
     private int sizeOfS;
     private int sizeOfSample; //number of numbers to check if exists
     private boolean[] universeVector; // will be true if the index is inside our set
-    private int falsePositive;
+    private int falsePositiveCounter;
 
-    public int getFalsePositive() {
-        return falsePositive;
+    public int getFalsePositiveCounter() {
+        return falsePositiveCounter;
     }
 
     public int getN() {
@@ -32,5 +32,11 @@ public class Simulation {
         universeVector[randNum]=true;
     }
 
+    boolean checkIfInSet(int randNum){
+        return universeVector[randNum];
+    }
 
+    double statistics(){
+
+    }
 }
