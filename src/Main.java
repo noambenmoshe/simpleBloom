@@ -38,8 +38,11 @@ public class Main {
         int sampleSize = 1;
         int numOfSampleRuns = 5;
         int bloomVecLength = 7;
-        int numOfHashFuncs = 2;
-*/
+        int numOfHashFuncs = 2;*/
+        System.out.println("Running a test with:\n\tUniverse Size\t\t"+uniSize+"\t\t Set Size\t\t\t"+setSize);
+        System.out.println("\tSample Size\t\t\t"+sampleSize+"\t\t Num of Runs\t\t"+numOfSampleRuns);
+        System.out.println("\tBloom Vec Length\t"+bloomVecLength+"\t\t Num of Hash funcs\t"+numOfHashFuncs);
+
         // initializing bloom filter & simulation
         Bloom b1= new Bloom(bloomVecLength,numOfHashFuncs);
         Simulation simulation= new Simulation(uniSize, setSize, sampleSize);
@@ -54,6 +57,6 @@ public class Main {
             simulation.falsePositiveCounterInitialize();
         }
 
-        System.out.println("Done!");
+        System.out.println("\nDone!");
     }
 }
