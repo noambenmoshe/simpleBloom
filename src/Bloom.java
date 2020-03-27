@@ -4,12 +4,9 @@ public class Bloom {
     private int m; //filter length
     private int k; //number of hash functions
     private boolean[] bloomArray;
+    // do you see this?
 
 
-
-    public static void main(String[] args) {
-        System.out.println("Hello World");
-    }
 }
 
 
