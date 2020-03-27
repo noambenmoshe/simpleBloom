@@ -1,3 +1,4 @@
+import java.lang.Math;
 
 public class Bloom {
     private int m; //filter length
@@ -24,13 +25,20 @@ public class Bloom {
     }
 
     void Add(int number){
+        /*for (int i=0; i<k; i++){
+            bloomArray[(int)Math.pow(number,i)] = true;
+        }*/
         bloomArray[hash1(number)] = true;
         bloomArray[hash2(number)] = true;
         bloomArray[hash3(number)] = true;
     }
 
     boolean checkIfExists(int number){
-        boolean flag = false;
+        /*for (int i=0; i<k; i++){
+            if (!bloomArray[(int)Math.pow(number,i)])
+                return false;
+        }
+        return true;*/
         if (!bloomArray[hash1(number)]) return false;
         if (!bloomArray[hash2(number)]) return false;
         return bloomArray[hash3(number)];
