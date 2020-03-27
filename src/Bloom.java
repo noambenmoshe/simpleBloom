@@ -19,8 +19,18 @@ public class Bloom {
         return (number*number*number)%10;
     }
 
-    void Add(int length){
+    void Add(int number){
+        bloomArray[hash1(number)] = true;
+        bloomArray[hash2(number)] = true;
+        bloomArray[hash3(number)] = true;
+    }
 
+    boolean checkIfExists(int number){
+        boolean flag = false;
+        if (!bloomArray[hash1(number)]) return false;
+        if (!bloomArray[hash2(number)]) return false;
+        if (!bloomArray[hash3(number)]) return false;
+        return true;
     }
 
     public static void main(String[] args) {}
