@@ -8,6 +8,7 @@ public class Bloom {
         m = length;
         k= numOfFunc;
     }
+    public static void main(String[] args) {}
 
 }
 
