@@ -9,6 +9,10 @@ public class Simulation {
         return falsePositiveCounter;
     }
 
+    public void falsePositiveCounterIncrement() {
+        this.falsePositiveCounter++;
+    }
+
     public int getN() {
         return n;
     }
@@ -36,7 +40,8 @@ public class Simulation {
         return universeVector[randNum];
     }
 
-    double statistics(){
-
+    void statistics(){
+        double percent = 100*falsePositiveCounter/(double)sizeOfSample;
+        System.out.println("Percent of false positives ");
     }
 }
