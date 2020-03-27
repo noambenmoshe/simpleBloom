@@ -8,6 +8,21 @@ public class Bloom {
         m = length;
         k= numOfFunc;
     }
+
+    int hash1(int number){
+        return number%10;
+    }
+    int hash2(int number){
+        return (number*number)%10;
+    }
+    int hash3(int number){
+        return (number*number*number)%10;
+    }
+
+    void Add(int length){
+
+    }
+
     public static void main(String[] args) {}
 
 }
