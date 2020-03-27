@@ -3,7 +3,7 @@ import java.util.Random;
 
 public class Main {
 
-    void SetRandomizer(Simulation sim, Bloom bloomFilter){
+    static void SetRandomizer(Simulation sim, Bloom bloomFilter){
         Random randClass = new Random();
         for(int i = 0; i < sim.getSizeOfS(); i++){
             int rand = randClass.nextInt(sim.getN());
@@ -12,7 +12,7 @@ public class Main {
         }
     }
 
-    void SampleRandomizer(Simulation sim, Bloom bloomFilter){
+    static void SampleRandomizer(Simulation sim, Bloom bloomFilter){
         Random randClass = new Random();
         for(int i = 0; i < sim.getSizeOfSample(); i++){
             int rand = randClass.nextInt(sim.getN());
@@ -23,7 +23,7 @@ public class Main {
         }
     }
 
-    public void main(String[] args) {
+    public static void main(String[] args) {
 
         // interpreting input arguments
         int uniSize = Integer.parseInt(args[1]);
