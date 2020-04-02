@@ -7,8 +7,9 @@ public class Bloom {
 
     public Bloom(int length, int numOfFunc){
         m = length;
-        k= numOfFunc;
+        k = numOfFunc;
         bloomArray = new boolean[m];
+        //initialize bloomArray
         for( int i=0; i<m; i++){
             bloomArray[i] = false;
         }
@@ -43,8 +44,5 @@ public class Bloom {
         if (!bloomArray[hash2(number)]) return false;
         return bloomArray[hash3(number)];*/
     }
-
-    //public static void main(String[] args) {}
-
 }
 

@@ -33,6 +33,10 @@ public class Simulation {
         sizeOfS = setSize;
         sizeOfSample = sampleSize;
         universeVector = new boolean[n];
+        //initialize universeVector
+        for( int i=0; i<n ;i++){
+            universeVector[i] = false;
+        }
     }
 
     void AddToUniverse(int randNum){
