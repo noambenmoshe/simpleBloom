@@ -1,6 +1,6 @@
 import java.lang.Math;
 
-public class Bloom {
+public class Bloom implements BloomFilter {
     private int m; //filter length
     private int k; //number of hash functions
     private boolean[] bloomArray;
@@ -25,7 +25,7 @@ public class Bloom {
         return (number*number*number)%m;
     }*/
 
-    void Add(int number){
+    public void insert(int number){
         for (int i=1; i<=k; i++){
             bloomArray[(int)Math.pow(number,i)%m] = true;
         }
@@ -34,7 +34,7 @@ public class Bloom {
         bloomArray[hash3(number)] = true;*/
     }
 
-    boolean checkIfExists(int number){
+    public boolean search(int number){
         for (int i=1; i<=k; i++){
             if (!bloomArray[(int)Math.pow(number,i)%m])
                 return false;

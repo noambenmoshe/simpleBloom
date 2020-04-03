@@ -8,7 +8,7 @@ public class Main {
         for(int i = 0; i < sim.getSizeOfS(); i++){
             int rand = randClass.nextInt(sim.getN());
             sim.AddToUniverse(rand);
-            bloomFilter.Add(rand);
+            bloomFilter.insert(rand);
         }
     }
 
@@ -17,7 +17,7 @@ public class Main {
         for(int i = 0; i < sim.getSizeOfSample(); i++){
             int rand = randClass.nextInt(sim.getN());
             boolean inSet = sim.checkIfInSet(rand);
-            boolean bloomAns = bloomFilter.checkIfExists(rand);
+            boolean bloomAns = bloomFilter.search(rand);
             if (bloomAns && !inSet)
                 sim.falsePositiveCounterIncrement();
         }
