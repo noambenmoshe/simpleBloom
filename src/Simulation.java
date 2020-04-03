@@ -1,8 +1,11 @@
+import java.util.HashMap;
+import java.util.Map;
+
 public class Simulation {
     private int n; //universe size
     private int sizeOfS; // S is the set size
     private int sizeOfSample; //number of numbers to check if exists
-    private boolean[] universeVector; // will be true if the index is inside our set
+    private Map<Integer, Boolean> universeVector; // will be true if the index is inside our set
     private int falsePositiveCounter;
 
     public int getFalsePositiveCounter() {
@@ -32,19 +35,15 @@ public class Simulation {
         n = universeSize;
         sizeOfS = setSize;
         sizeOfSample = sampleSize;
-        universeVector = new boolean[n];
-        //initialize universeVector
-        for( int i=0; i<n ;i++){
-            universeVector[i] = false;
-        }
+        universeVector = new HashMap<>();
     }
 
-    void AddToUniverse(int randNum){
-        universeVector[randNum]=true;
+    void insertToUniverse(int randNum){
+        universeVector.put(randNum,true);
     }
 
-    boolean checkIfInSet(int randNum){
-        return universeVector[randNum];
+    boolean searchSet(int randNum){
+        return universeVector.containsValue(randNum);
     }
 
     void statistics(){
