@@ -66,7 +66,7 @@ public class Main {
 
         ols_hf.set(ols_example);
 
-        BFOLS bf_ols = new BFOLS(5,3,ols_hf);
+        BFOLS_vec bf_ols = new BFOLS_vec(5,3,ols_hf);
         // initializing bloom filter & simulation
         //BloomFilter b1= new Bloom(bloomVecLength,numOfHashFuncs);
         Simulation simulation= new Simulation(uniSize, setSize, sampleSize);
