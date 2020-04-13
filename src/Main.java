@@ -50,11 +50,18 @@ public class Main {
         System.out.println("\tBloom Vec Length\t"+bloomVecLength+"\t\t Num of Hash funcs\t"+numOfHashFuncs);
 
      */
+
         //building the OLSs form the first example from the paper
-        List<Integer> numList1 = Arrays.asList(0,1,2,3,4,1,2,3,4,0,2,3,4,0,1,3,4,0,1,2,4,0,1,2,3);
+//        List<Integer> numList1 = Arrays.asList(0,1,2,3,4,1,2,3,4,0,2,3,4,0,1,3,4,0,1,2,4,0,1,2,3);
+//        Vector<Integer> ols1 = new Vector<>(numList1);
+//
+//        List<Integer> numList2 = Arrays.asList(0,1,2,3,4,2,3,4,0,1,4,0,1,2,3,1,2,3,4,0,3,4,0,1,2);
+//        Vector<Integer> ols2 = new Vector<>(numList2);
+
+        List<Integer> numList1 = Arrays.asList();
         Vector<Integer> ols1 = new Vector<>(numList1);
 
-        List<Integer> numList2 = Arrays.asList(0,1,2,3,4,2,3,4,0,1,4,0,1,2,3,1,2,3,4,0,3,4,0,1,2);
+        List<Integer> numList2 = Arrays.asList();
         Vector<Integer> ols2 = new Vector<>(numList2);
 
         List<Integer> numList3 = Arrays.asList();
@@ -65,7 +72,7 @@ public class Main {
         ols_vector.add(ols2);
         ols_vector.add(ols3);
 
-        OLS ols_example = new OLS(2,5,ols_vector);
+//        OLS ols_example = new OLS(2,5,ols_vector);
 
         OLS_HF ols_hf = new OLS_HF(5);
 
