@@ -1,4 +1,7 @@
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
+import java.util.Vector;
 //import java.Integer.parseInt()
 
 public class Main {
@@ -58,5 +61,20 @@ public class Main {
         }
 
         System.out.println("\nDone!");
+
+        //building the OLSs form the first example from the paper
+        List<Integer> numList1 = Arrays.asList(0,1,2,3,4,1,2,3,4,0,2,3,4,0,1,3,4,0,1,2,4,0,1,2,3);
+        Vector<Integer> ols1 = new Vector<>(numList1);
+
+        List<Integer> numList2 = Arrays.asList(0,1,2,3,4,2,3,4,0,1,4,0,1,2,3,1,2,3,4,0,3,4,0,1,2);
+        Vector<Integer> ols2 = new Vector<>(numList2);
+
+        Vector<Vector<Integer>> ols_vector = new Vector<Vector<Integer>>;
+        ols_vector.add(ols1);
+        ols_vector.add(ols2);
+
+        OLS ols_example = new OLS(2,5,ols_vector);
+
+
     }
 }
