@@ -38,7 +38,7 @@ public class Main {
         int numOfHashFuncs = Integer.parseInt(args[5]);
     */
         int uniSize = 25;
-        int setSize = 3;
+        int setSize = 6;
         int sampleSize = 10;
         int numOfSampleRuns = 10;
         int bloomVecLength = 5*(3+1);
@@ -58,13 +58,13 @@ public class Main {
 //        List<Integer> numList2 = Arrays.asList(0,1,2,3,4,2,3,4,0,1,4,0,1,2,3,1,2,3,4,0,3,4,0,1,2);
 //        Vector<Integer> ols2 = new Vector<>(numList2);
 
-        List<Integer> numList1 = Arrays.asList();
+        List<Integer> numList1 = Arrays.asList(0,	1,	2,	3,	4,	1,	2,	3,	4,	0,	2,	3,	4,	0,	1,	3,	4,	0,	1,	2,	4,	0,	1,	2,	3);
         Vector<Integer> ols1 = new Vector<>(numList1);
 
-        List<Integer> numList2 = Arrays.asList();
+        List<Integer> numList2 = Arrays.asList(0,	1,	2,	3,	4,	4,	0,	1,	2,	3,	3,	4,	0,	1,	2,	2,	3,	4,	0,	1,	1,	2,	3,	4,	0);
         Vector<Integer> ols2 = new Vector<>(numList2);
 
-        List<Integer> numList3 = Arrays.asList();
+        List<Integer> numList3 = Arrays.asList(0,	1,	2,	3,	4,	3,	4,	0,	1,	2,	1,	2,	3,	4,	0,	4,	0,	1,	2,	3,	2,	3,	4,	0,	1);
         Vector<Integer> ols3 = new Vector<>(numList3);
 
         Vector<Vector<Integer>> ols_vector = new Vector<Vector<Integer>>();
@@ -72,13 +72,13 @@ public class Main {
         ols_vector.add(ols2);
         ols_vector.add(ols3);
 
-//        OLS ols_example = new OLS(2,5,ols_vector);
+        OLS ols_example = new OLS(3,5,ols_vector);
 
         OLS_HF ols_hf = new OLS_HF(5);
 
         ols_hf.set(ols_example);
 
-        BFOLS_vec bf_ols = new BFOLS_vec(5,3,ols_hf);
+        BFOLS_vec bf_ols = new BFOLS_vec(5,4,ols_hf);
         // initializing bloom filter & simulation
         //BloomFilter b1= new Bloom(bloomVecLength,numOfHashFuncs);
         Simulation simulation= new Simulation(uniSize, setSize, sampleSize);
