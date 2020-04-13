@@ -8,12 +8,15 @@ public class OLS_HF implements HashFunction {
 
     // the constructor initializes a map with universeSize elements, for each key they Vector will hold the bits that
     // need to be 1 to represent it
-    public OLS_HF(int universeSize){
+    // input s it the square root of the universe size
+    public OLS_HF(int s){
         numbersBitMask = new HashMap<>();
-        for(int i=0; i<universeSize; i++){
+        for(int i=0; i<s*s; i++){
             numbersBitMask.put(i,new Vector<>());
             // adding first additional matrix (all rows with the same value)
-
+            numbersBitMask.get(i).add(i/s);
+            // adding second additional matrix (all columns with the same value)
+            numbersBitMask.get(i).add(i%s);
         }
     }
 
