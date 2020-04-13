@@ -69,7 +69,7 @@ public class Main {
         List<Integer> numList2 = Arrays.asList(0,1,2,3,4,2,3,4,0,1,4,0,1,2,3,1,2,3,4,0,3,4,0,1,2);
         Vector<Integer> ols2 = new Vector<>(numList2);
 
-        Vector<Vector<Integer>> ols_vector = new Vector<Vector<Integer>>;
+        Vector<Vector<Integer>> ols_vector = new Vector<Vector<Integer>>();
         ols_vector.add(ols1);
         ols_vector.add(ols2);
 
