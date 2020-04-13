@@ -1,5 +1,6 @@
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 
@@ -13,7 +14,7 @@ public class BFOLS implements BloomFilter {
     public BFOLS(int m, int k, Map<Integer, Boolean> bloom_Filter, HashFunction hash_Function ) {
         this.m = m;
         this.k = k;
-        this.bloomFilter = bloom_Filter;
+        this.bloomFilter = new HashMap<>();
         this.hashFunction = hash_Function;
     }
 
@@ -23,6 +24,7 @@ public class BFOLS implements BloomFilter {
     public BFOLS(int s, int d, HashFunction hashFunction){
         this.m = s * (d + 1);
         this.k = d + 1;
+        this.bloomFilter = new HashMap<>();
         this.hashFunction = hashFunction;
     }
 
@@ -43,7 +45,7 @@ public class BFOLS implements BloomFilter {
     public boolean search(int number) {
         Vector<Integer> bit_mask = hashFunction.get(number);
         for (int bit : bit_mask){
-            if(!bloomFilter.get(bit)){
+            if(!bloomFilter.get(bit_mask.get(bit))){
                 return false;
             }
         }

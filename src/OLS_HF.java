@@ -5,7 +5,6 @@ import java.util.Map;
 public class OLS_HF implements HashFunction {
     // the Vector will contain which bit should be zero for the key integer, according to our OLSs
     private Map<Integer,  Vector<Integer>> numbersBitMask;
-
     // the constructor initializes a map with universeSize elements, for each key they Vector will hold the bits that
     // need to be 1 to represent it
     // input s it the square root of the universe size
