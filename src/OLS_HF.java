@@ -15,19 +15,23 @@ public class OLS_HF implements HashFunction {
             // adding first additional matrix (all rows with the same value)
             numbersBitMask.get(i).add(i/s);
             // adding second additional matrix (all columns with the same value)
-            numbersBitMask.get(i).add(i%s);
+            // this will correspond to the next set of values in the H matrix (second rectangle)
+            numbersBitMask.get(i).add((i%s)+s);
         }
     }
 
     // sets the Vector for each element in the universe according to the OLSs in ols_object
     public void set(OLS ols_object) {
+        int ols_num =  2;
         for (Vector<Integer> ols: ols_object.OLS_vec){
             //updating the map with one OLS at a time
             int i = 0;
             for (int bit: ols){
-                numbersBitMask.get(i).add(bit);
+                numbersBitMask.get(i).add(bit+(ols_object.s *ols_num));
                 i++;
+
             }
+            ols_num++;
         }
     }
 

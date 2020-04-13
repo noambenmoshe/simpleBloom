@@ -43,7 +43,7 @@ public class Simulation {
     }
 
     boolean searchSet(int randNum){
-        return universeVector.containsValue(randNum);
+        return universeVector.containsKey(randNum);
     }
 
     void statistics(){

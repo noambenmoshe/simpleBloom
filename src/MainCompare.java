@@ -40,9 +40,9 @@ public class MainCompare {
         int numOfHashFuncs = Integer.parseInt(args[5]);*/
 
         int uniSize = 100;
-        int setSize = 10;
-        int sampleSize = 50;
-        int numOfSampleRuns = 5;
+        int setSize = 3;
+        int sampleSize = 3;
+        int numOfSampleRuns = 1;
         int bloomVecLength = 8;
         int numOfHashFuncs = 2;
         System.out.println("Running a test with:\n\tUniverse Size\t\t"+uniSize+"\t\t Set Size\t\t\t"+setSize);

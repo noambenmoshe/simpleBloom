@@ -8,6 +8,7 @@ public class Main {
 
     static void SetRandomizer(Simulation sim, BloomFilter bloomFilter){
         Random randClass = new Random();
+
         for(int i = 0; i < sim.getSizeOfS(); i++){
             int rand = randClass.nextInt(sim.getN());
             sim.insertToUniverse(rand);
@@ -38,8 +39,8 @@ public class Main {
     */
         int uniSize = 25;
         int setSize = 3;
-        int sampleSize = 1;
-        int numOfSampleRuns = 1;
+        int sampleSize = 10;
+        int numOfSampleRuns = 10;
         int bloomVecLength = 5*(3+1);
         int numOfHashFuncs = (3+1);
         /*
@@ -56,9 +57,13 @@ public class Main {
         List<Integer> numList2 = Arrays.asList(0,1,2,3,4,2,3,4,0,1,4,0,1,2,3,1,2,3,4,0,3,4,0,1,2);
         Vector<Integer> ols2 = new Vector<>(numList2);
 
+        List<Integer> numList3 = Arrays.asList();
+        Vector<Integer> ols3 = new Vector<>(numList3);
+
         Vector<Vector<Integer>> ols_vector = new Vector<Vector<Integer>>();
         ols_vector.add(ols1);
         ols_vector.add(ols2);
+        ols_vector.add(ols3);
 
         OLS ols_example = new OLS(2,5,ols_vector);
 
