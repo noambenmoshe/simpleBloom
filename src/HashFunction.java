@@ -1,8 +1,8 @@
-import java.util.Vector<int>;
+import java.util.Vector;
 
 public interface HashFunction {
 
-    public void set();
+    public void set(OLS ols_object);
 
-    public Vector<int> get(int number);
+    public Vector<Integer> get(int number);
 }
