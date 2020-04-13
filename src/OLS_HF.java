@@ -23,8 +23,10 @@ public class OLS_HF implements HashFunction {
     public void set(OLS ols_object) {
         for (Vector<Integer> ols: ols_object.OLS_vec){
             //updating the map with one OLS at a time
+            int i = 0;
             for (int bit: ols){
-                numbersBitMask.get(bit).add(ols.get(bit));
+                numbersBitMask.get(i).add(bit);
+                i++;
             }
         }
     }

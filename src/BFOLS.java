@@ -45,7 +45,7 @@ public class BFOLS implements BloomFilter {
     public boolean search(int number) {
         Vector<Integer> bit_mask = hashFunction.get(number);
         for (int bit : bit_mask){
-            if(!bloomFilter.get(bit_mask.get(bit))){
+            if(!bloomFilter.get(bit)){
                 return false;
             }
         }
