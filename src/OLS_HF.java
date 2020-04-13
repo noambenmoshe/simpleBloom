@@ -3,19 +3,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class OLS_HF implements HashFunction {
-    // the Vector will contain which bit should be zero for the key integer, according to our OLSs
+    // each Vector (mask-Vector) will contain which bits should be 1 for the key integer, according to our OLSs
     private Map<Integer,  Vector<Integer>> numbersBitMask;
-    // the constructor initializes a map with universeSize elements, for each key they Vector will hold the bits that
-    // need to be 1 to represent it
+
+    // the constructor initializes a map with universeSize elements (=keys), and a mask-Vector
     // input s it the square root of the universe size
     public OLS_HF(int s){
         numbersBitMask = new HashMap<>();
         for(int i=0; i<s*s; i++){
             numbersBitMask.put(i,new Vector<>());
-            // adding first additional matrix (all rows with the same value)
+            // adding first additional matrix (all rows with the same value). corresponds to first S bits.
             numbersBitMask.get(i).add(i/s);
-            // adding second additional matrix (all columns with the same value)
-            // this will correspond to the next set of values in the H matrix (second rectangle)
+            // adding second additional matrix (all columns with the same value). corresponds to second S bits.
             numbersBitMask.get(i).add((i%s)+s);
         }
     }
@@ -24,18 +23,18 @@ public class OLS_HF implements HashFunction {
     public void set(OLS ols_object) {
         int ols_num =  2;
         for (Vector<Integer> ols: ols_object.OLS_vec){
-            //updating the map with one OLS at a time
             int i = 0;
+            //updating the map with one OLS at a time
             for (int bit: ols){
+                // multiplying by ols_num in order to correspond to the ols_num (3rd,4th,...) S bits
                 numbersBitMask.get(i).add(bit+(ols_object.s *ols_num));
                 i++;
-
             }
             ols_num++;
         }
     }
 
-    // returns the Vector representing the equivalent
+    // returns a mask-Vector for the given element
     public Vector<Integer> get(int element){
         return numbersBitMask.get(element);
     }

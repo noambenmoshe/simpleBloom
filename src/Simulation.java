@@ -2,10 +2,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Simulation {
-    private int n; //universe size
-    private int sizeOfS; // S is the set size
-    private int sizeOfSample; //number of numbers to check if exists
-    private Map<Integer, Boolean> universeVector; // will be true if the index is inside our set
+    private int n;                                  //universe size
+    private int sizeOfS;                            // S is the set size
+    private int sizeOfSample;                       //number of numbers to check if exists
+    private Map<Integer, Boolean> universeVector;   // will be true if the index is inside our set
     private int falsePositiveCounter;
 
     public int getFalsePositiveCounter() {
