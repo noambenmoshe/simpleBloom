@@ -1,8 +1,8 @@
-import java.util.ArrayList;
+import java.util.Vector;
 
 public interface HashFunction {
 
     public void set(OLS ols_object);
 
-    public ArrayList<Integer> get(int number);
+    public Vector<Integer> get(int number);
 }
