@@ -22,9 +22,6 @@ public class POLS_HF {
     }
 
     public void set(int y) {
-        if(numbersBitMask.containsKey(y)) {
-            return;
-        }
         // need to calculate the bit mask
         numbersBitMask.put(y,new Vector<>());
         //build polynom
@@ -50,4 +47,11 @@ public class POLS_HF {
         return result;
     }
 
+    // returns a mask-Vector for the given element
+    public Vector<Integer> get(int element){
+          if(!numbersBitMask.containsKey(element)) {
+             set(element);
+          }
+          return numbersBitMask.get(element);
+    }
 }
