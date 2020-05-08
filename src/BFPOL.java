@@ -23,7 +23,7 @@ public class BFPOL implements BloomFilter {
         }
 
         public int calcBase(int n, int t){
-            int base = (int) Math.round(Math.pow(n, 1/t));
+            int base = (int) Math.round(Math.pow(n, 1.0/(double)t));
             if (Math.pow(base, t) == n)
                 return base;
             else

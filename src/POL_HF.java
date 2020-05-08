@@ -14,11 +14,11 @@ public class POL_HF {
 
     // the constructor initializes a map with universeSize elements (=keys), and a mask-Vector
     // n is the size of the universe
-    public POL_HF(int base, int t, int d){
+    public POL_HF(int base, int t, int d) {
         numbersBitMask = new HashMap<>();
-//        for(int i=0; i< n; i++){
-//            numbersBitMask.put(i,new Vector<>());
-//        }
+        this.base = base;
+        this.t = t;
+        this.d = d;
     }
 
     public void createBitMask(int y) {
@@ -26,10 +26,11 @@ public class POL_HF {
         numbersBitMask.put(y,new Vector<>());
         //build polynom
         Vector<Integer> coefficient = new Vector<>();
+        int y_temp = y;
         for(int i=0; i < t-1; i++){
-            int coe = y % base;
+            int coe = y_temp % base;
             coefficient.add(coe);
-            y = (y - coe)/base;
+            y_temp = (y_temp - coe)/base;
         }
 
         for(int j=0; j < (t-1)*d; j++){
@@ -44,7 +45,7 @@ public class POL_HF {
               result= (int) (result + coe*Math.pow(j,i));
         i++;
         }
-        return result;
+        return result % base;
     }
 
     // returns a mask-Vector for the given element

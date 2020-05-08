@@ -37,20 +37,20 @@ public class Main {
         int bloomVecLength = Integer.parseInt(args[4]);
         int numOfHashFuncs = Integer.parseInt(args[5]);
     */
-        int uniSize = 25;
-        int setSize = 6;
+        int uniSize = 343;
+        int setSize = 2;
         int sampleSize = 10;
         int numOfSampleRuns = 10;
         int bloomVecLength = 5*(3+1);
         int numOfHashFuncs = (3+1);
-        /*
 
+        /*
         System.out.println("Running a test with:\n\tUniverse Size\t\t"+uniSize+"\t\t Set Size\t\t\t"+setSize);
         System.out.println("\tSample Size\t\t\t"+sampleSize+"\t\t Num of Runs\t\t"+numOfSampleRuns);
         System.out.println("\tBloom Vec Length\t"+bloomVecLength+"\t\t Num of Hash funcs\t"+numOfHashFuncs);
-
      */
 
+/************************************************OLS*******************************************************************/
         //building the OLSs form the first example from the paper
 //        List<Integer> numList1 = Arrays.asList(0,1,2,3,4,1,2,3,4,0,2,3,4,0,1,3,4,0,1,2,4,0,1,2,3);
 //        Vector<Integer> ols1 = new Vector<>(numList1);
@@ -79,22 +79,22 @@ public class Main {
         ols_hf.set(ols_example);
 
         BFOLS_vec bf_ols = new BFOLS_vec(5,4,ols_hf);
-
+/*******************************************POL************************************************************************/
         // initializing bloom filter & simulation
-        //BloomFilter b1= new Bloom(bloomVecLength,numOfHashFuncs);
+        BFPOL bf_pol = new BFPOL(343, 3, 2);
+//        bf_pol.insert(7);
+//        bf_pol.insert(50);
         Simulation simulation= new Simulation(uniSize, setSize, sampleSize);
 
         // randomly choosing a set, updating simulation and adding to bloom filter
-        SetRandomizer(simulation,bf_ols);
+        SetRandomizer(simulation,bf_pol);
 
         // running all checks
         for (int i=0; i<numOfSampleRuns; i++){
-            SampleRandomizer(simulation,bf_ols);
+            SampleRandomizer(simulation,bf_pol);
             simulation.statistics();
             simulation.falsePositiveCounterInitialize();
         }
-
-
 
         System.out.println("\nDone!");
 
