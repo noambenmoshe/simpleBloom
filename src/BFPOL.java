@@ -12,8 +12,8 @@ public class BFPOL implements BloomFilter {
         private int n; //universe size;
 
         //inputs: n - represents the size of the universe
-        //        t - an integer that the
-        //        d - represents each number and it's mask bits
+        //        t - an integer such that the t-th root of n in a prime number
+        //        d - set maximal size for FPFZ
         public BFPOL(int n, int t, int d){
             this.base = calcBase(n, t);
             this.m = ((t-1)*d + 1)*base;
@@ -30,26 +30,25 @@ public class BFPOL implements BloomFilter {
                 return -1;
         }
 
-//        @Override
-//        // gets vector that says which bits need to be true in the bloomFilter,
-//        // then changes each relevant bit to be true in bloomFilter
-//        public void insert(int number) {
-//            Vector<Integer> bit_mask = hashFunction.get(number);
-//            bloomFilter.addAll(bit_mask);
-//        }
-//
-//        @Override
-//        // gets vector that says which bits need to be true in the bloomFilter,
-//        // then if all relevant bits are true in bloomFilter then number is found in bloomFilter return true
-//        // otherwise number is not found, return false
-//        public boolean search(int number) {
-//            Vector<Integer> bit_mask = hashFunction.get(number);
-//            for (int bit : bit_mask){
-//                if(!bloomFilter.contains(bit)){
-//                    return false;
-//                }
-//            }
-//            return  true;
-//        }
+        @Override
+        // gets vector that says which bits need to be true in the bloomFilter,
+        // then changes each relevant bit to be true in bloomFilter
+        public void insert(int number) {
+            Vector<Integer> bit_mask = hashFunction.get(number);
+            bloomFilter.addAll(bit_mask);
+        }
 
+        @Override
+        // gets vector that says which bits need to be true in the bloomFilter,
+        // then if all relevant bits are true in bloomFilter then number is found in bloomFilter return true
+        // otherwise number is not found, return false
+        public boolean search(int number) {
+            Vector<Integer> bit_mask = hashFunction.get(number);
+            for (int bit : bit_mask){
+                if(!bloomFilter.contains(bit)){
+                    return false;
+                }
+            }
+            return  true;
+        }
 }
