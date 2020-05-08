@@ -1,11 +1,11 @@
 import java.lang.Math;
 
-public class Bloom implements BloomFilter {
+public class BloomPrimitive implements BloomFilter {
     private int m; //filter length
     private int k; //number of hash functions
     private boolean[] bloomArray;
 
-    public Bloom(int length, int numOfFunc){
+    public BloomPrimitive(int length, int numOfFunc){
         m = length;
         k = numOfFunc;
         bloomArray = new boolean[m];

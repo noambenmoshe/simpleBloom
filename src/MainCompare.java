@@ -30,28 +30,34 @@ public class MainCompare {
     }
 
     public static void main(String[] args) {
+        boolean UsingInputArgs = false;
+        int uniSize, setSize, sampleSize;
+        int numOfSampleRuns, bloomVecLength, numOfHashFuncs;
+        if (UsingInputArgs){
+            // interpreting input arguments
+            uniSize = Integer.parseInt(args[0]);
+            setSize = Integer.parseInt(args[1]);
+            sampleSize = Integer.parseInt(args[2]);
+            numOfSampleRuns = Integer.parseInt(args[3]);
+            bloomVecLength = Integer.parseInt(args[4]);
+            numOfHashFuncs = Integer.parseInt(args[5]);
+        } else {
+            uniSize = 121;
+            setSize = 2;
+            sampleSize = 10;
+            numOfSampleRuns = 10;
+            bloomVecLength = 5*(3+1);
+            numOfHashFuncs = (3+1);
+        }
 
-        // interpreting input arguments
-        /*int uniSize = Integer.parseInt(args[0]);
-        int setSize = Integer.parseInt(args[1]);
-        int sampleSize = Integer.parseInt(args[2]);
-        int numOfSampleRuns = Integer.parseInt(args[3]);
-        int bloomVecLength = Integer.parseInt(args[4]);
-        int numOfHashFuncs = Integer.parseInt(args[5]);*/
-
-        int uniSize = 100;
-        int setSize = 3;
-        int sampleSize = 3;
-        int numOfSampleRuns = 1;
-        int bloomVecLength = 8;
-        int numOfHashFuncs = 2;
+        // Printing Parameters
         System.out.println("Running a test with:\n\tUniverse Size\t\t"+uniSize+"\t\t Set Size\t\t\t"+setSize);
         System.out.println("\tSample Size\t\t\t"+sampleSize+"\t\t Num of Runs\t\t"+numOfSampleRuns);
         System.out.println("\tBloom Vec Length\t"+bloomVecLength+"\t\t Num of Hash funcs\t"+numOfHashFuncs);
 
         // initializing bloom filter & simulation
-        BloomFilter b1= new Bloom(bloomVecLength,numOfHashFuncs);
-        BloomFilter b2= new Bloom(bloomVecLength,numOfHashFuncs);
+        BloomFilter b1= new BloomPrimitive(bloomVecLength,numOfHashFuncs);
+        BloomFilter b2= new BloomPrimitive(bloomVecLength,numOfHashFuncs);
         Simulation simulation= new Simulation(uniSize, setSize, sampleSize);
         Simulation simulation2= new Simulation(uniSize, setSize, sampleSize);
 
