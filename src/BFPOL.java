@@ -2,6 +2,8 @@ import java.util.Map;
 import java.util.Vector;
 import java.lang.Math;
 
+import static javafx.application.Platform.exit;
+
 public class BFPOL implements BloomFilter {
 
         private int m; //filter length
@@ -20,6 +22,11 @@ public class BFPOL implements BloomFilter {
             this.k = d + 1;
             this.bloomFilter = new Vector<>();
             this.hashFunction = new POL_HF(base, t, n);
+            //TODO: make this error prettier
+            if(((t-1)*d+1) >= base) {
+                System.out.println("Error: base = "+ base +" smaller or equal to (t-1)d+1 = "+((t-1)*d+1));
+                System.exit(-1);
+            }
         }
 
         public int calcBase(int n, int t){

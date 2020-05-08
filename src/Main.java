@@ -16,17 +16,20 @@ public class Main {
         }
     }
 
-    static void SampleRandomizer(Simulation sim, BloomFilter bloomFilter){
+    static void SampleRandomizer(Simulation sim, BloomFilter bloomFilter) {
         Random randClass = new Random();
-        for(int i = 0; i < sim.getSizeOfSample(); i++){
+        for (int i = 0; i < sim.getSizeOfSample(); i++) {
             int rand = randClass.nextInt(sim.getN());
             boolean inSet = sim.searchSet(rand);
             boolean bloomAns = bloomFilter.search(rand);
-            if (bloomAns && !inSet)
+            if (bloomAns && !inSet) {
                 sim.falsePositiveCounterIncrement();
+                System.out.println("False Positive number: " + rand + "\n");
+
+            }
+
         }
     }
-
     public static void main(String[] args) {
     /*
         // interpreting input arguments
@@ -37,7 +40,7 @@ public class Main {
         int bloomVecLength = Integer.parseInt(args[4]);
         int numOfHashFuncs = Integer.parseInt(args[5]);
     */
-        int uniSize = 343;
+        int uniSize = 121;
         int setSize = 2;
         int sampleSize = 10;
         int numOfSampleRuns = 10;
@@ -81,8 +84,9 @@ public class Main {
         BFOLS_vec bf_ols = new BFOLS_vec(5,4,ols_hf);
 /*******************************************POL************************************************************************/
         // initializing bloom filter & simulation
-        BFPOL bf_pol = new BFPOL(343, 3, 2);
-//        bf_pol.insert(7);
+        BFPOL bf_pol = new BFPOL(uniSize, 2, 2);
+
+//        bf_pol.insert(168);
 //        bf_pol.insert(50);
         Simulation simulation= new Simulation(uniSize, setSize, sampleSize);
 

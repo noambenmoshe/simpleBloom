@@ -27,13 +27,13 @@ public class POL_HF {
         //build polynom
         Vector<Integer> coefficient = new Vector<>();
         int y_temp = y;
-        for(int i=0; i < t-1; i++){
+        for(int i=0; i < t; i++){
             int coe = y_temp % base;
             coefficient.add(coe);
             y_temp = (y_temp - coe)/base;
         }
 
-        for(int j=0; j < (t-1)*d; j++){
+        for(int j=0; j <= (t-1)*d; j++){
             numbersBitMask.get(y).add(j*base+getPolinomValue(j,coefficient));
         }
     }
