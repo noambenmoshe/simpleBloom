@@ -80,7 +80,7 @@ public class Main {
 
         ols_hf.set(ols_example);
 
-        BFOLS_vec bf_ols = new BFOLS_vec(5,4,ols_hf);
+        BFOLS bf_ols = new BFOLS(5,4,ols_hf);
 /* ***********************************************POL**************************************************************** */
         // initializing bloom filter & simulation
         BFPOL bf_pol = new BFPOL(uniSize, 2, 2);
