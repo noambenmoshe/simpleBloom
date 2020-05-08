@@ -2,31 +2,32 @@ import java.util.Map;
 import java.util.Vector;
 import java.lang.Math;
 
-public class BFPOLS implements BloomFilter {
+public class BFPOL implements BloomFilter {
 
         private int m; //filter length
         private int k; //number of hash functions n^(1/t)
         private Vector<Integer> bloomFilter;
-        private POLS_HF hashFunction;
-
+        private POL_HF hashFunction;
+        private int base;
         private int n; //universe size;
 
-        // regular constructor
-        public BFPOLS(int m, int k, Map<Integer, Boolean> bloom_Filter) {
-            this.m = m;
-            this.k = k;
-            this.bloomFilter = new Vector<>();
-            this.hashFunction = new POLS_HF(n);
-        }
-
-        //inputs: s - represents the square root of the universe size
-        //        d - represents the free zone size  / size of set you can insert with out false positives
-        //        hashFunction - represents each number and it's mask bits
-        public BFPOLS(int n, int t, int d){
-            this.m = ((t-1)*d + 1)*;
+        //inputs: n - represents the size of the universe
+        //        t - an integer that the
+        //        d - represents each number and it's mask bits
+        public BFPOL(int n, int t, int d){
+            this.base = calcBase(n, t);
+            this.m = ((t-1)*d + 1)*base;
             this.k = d + 1;
             this.bloomFilter = new Vector<>();
-            this.hashFunction = hashFunction;
+            this.hashFunction = new POL_HF(base, t, n);
+        }
+
+        public int calcBase(int n, int t){
+            int base = (int) Math.round(Math.pow(n, 1/t));
+            if (Math.pow(base, t) == n)
+                return base;
+            else
+                return -1;
         }
 
 //        @Override
