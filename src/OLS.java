@@ -10,5 +10,4 @@ public class OLS {
           s = size_of_square;
           OLS_vec = vector_of_OLS;
      }
-
 }
