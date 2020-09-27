@@ -50,6 +50,6 @@ public class Simulation {
         double percent = 100*falsePositiveCounter/(double)sizeOfSample;
         //System.out.println("\nSimulation parameters: n="+ n +" set size="+sizeOfS+ " sample size="+sizeOfSample);
         System.out.println("\nNumber of false positive:" + falsePositiveCounter);
-        System.out.println("Percent of false positives compered to size of sample %" + percent);
+        System.out.println("Percent of false positives compered to size of sample %" + percent+"\n");
     }
 }

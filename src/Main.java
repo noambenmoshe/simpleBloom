@@ -5,7 +5,8 @@ import java.util.Vector;
 //import java.Integer.parseInt()
 
 public class Main {
-
+    //Randomise numbers that will be inserted to bloomfilter
+    //Insert numbers to universe
     static void SetRandomizer(Simulation sim, BloomFilter bloomFilter){
         Random randClass = new Random();
 
@@ -16,6 +17,8 @@ public class Main {
         }
     }
 
+    //Randomize numbers to check if the bloomfilter returns a correct answer
+    //Todo: add or change a function that will check if the bloomfilter returns a correct answer about all the numbers in the universe
     static void SampleRandomizer(Simulation sim, BloomFilter bloomFilter) {
         Random randClass = new Random();
         for (int i = 0; i < sim.getSizeOfSample(); i++) {
