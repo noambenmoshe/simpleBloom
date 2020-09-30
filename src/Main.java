@@ -18,7 +18,6 @@ public class Main {
     }
 
     //Randomize numbers to check if the bloomfilter returns a correct answer
-    //Todo: add or change a function that will check if the bloomfilter returns a correct answer about all the numbers in the universe
     static void SampleRandomizer(Simulation sim, BloomFilter bloomFilter) {
         Random randClass = new Random();
         for (int i = 0; i < sim.getSizeOfSample(); i++) {
@@ -28,6 +27,17 @@ public class Main {
             if (bloomAns && !inSet) {
                 sim.falsePositiveCounterIncrement();
                 System.out.println("False Positive number: " + rand + "\n");
+            }
+        }
+    }
+
+    static void ScanUniverseElements(Simulation sim, BloomFilter bloomFilter) {
+        for (int i = 0; i < sim.getN(); i++) {
+            boolean inSet = sim.searchSet(i);
+            boolean bloomAns = bloomFilter.search(i);
+            if (bloomAns && !inSet) {
+                sim.falsePositiveCounterIncrement();
+                System.out.println("False Positive number: " + i + "\n");
             }
         }
     }
@@ -147,7 +157,7 @@ public class Main {
         }
         SetRandomizer(simulation,bf_mols);
         for (int i=0; i<numOfSampleRuns; i++){
-            SampleRandomizer(simulation,bf_mols);
+            ScanUniverseElements(simulation,bf_mols);
             simulation.statistics();
             simulation.falsePositiveCounterInitialize();
         }
