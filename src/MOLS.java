@@ -6,7 +6,10 @@ public class MOLS {
      int s;                             // square of universe
      Vector<Vector<Integer>> OLS_vector;   // each OLS is represented in a vector of size s^2
 
+     Vector<Vector<Integer>> ols_vector_s_3;
      Vector<Vector<Integer>> ols_vector_s_5;
+     Vector<Vector<Integer>> ols_vector_s_9;
+     Vector<Vector<Integer>> ols_vector_s_11;
 
      public MOLS(int number_of_ols, int size_of_square, Vector<Vector<Integer>> vector_of_OLS) {
           number_of_OLS = number_of_ols;
@@ -18,15 +21,24 @@ public class MOLS {
      //We need to have only one intialization of this object.
      //All the OLSs need to be kept here
      public MOLS(){
+          this.ols_vector_s_3 = new Vector<Vector<Integer>>();
           this.ols_vector_s_5 = new Vector<Vector<Integer>>();
+          this.ols_vector_s_9 = new Vector<Vector<Integer>>();
+          this.ols_vector_s_11 = new Vector<Vector<Integer>>();
      }
 
      //Each boomfilter has an OLS size (s) it is working with. To choose the right kind of OLS we use this function
      //Depending on s we return the right vector
      Vector<Vector<Integer>> choose_OLS_vec (int s){
           switch(s){
+               case 3:
+                    return ols_vector_s_3;
                case 5:
                     return ols_vector_s_5;
+               case 9:
+                    return ols_vector_s_9;
+               case 11:
+                    return ols_vector_s_11;
                default:
                     return null;
           }
