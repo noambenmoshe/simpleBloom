@@ -29,6 +29,7 @@ public class BFPOL implements BloomFilter {
             }
         }
 
+        //Todo: maybe change round to ceil which will round value to the upper value
         public int calcBase(int n, int t){
             int base = (int) Math.round(Math.pow(n, 1.0/(double)t));
             if (Math.pow(base, t) == n)

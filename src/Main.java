@@ -45,7 +45,7 @@ public class Main {
             bloomVecLength = Integer.parseInt(args[4]);
             numOfHashFuncs = Integer.parseInt(args[5]);
         } else {
-            uniSize = 121;
+            uniSize = 24;
             setSize = 2;
             sampleSize = 10;
             numOfSampleRuns = 10;
@@ -57,6 +57,11 @@ public class Main {
         System.out.println("\tSample Size\t\t\t"+sampleSize+"\t\t Num of Runs\t\t"+numOfSampleRuns);
         System.out.println("\tBloom Vec Length\t"+bloomVecLength+"\t\t Num of Hash funcs\t"+numOfHashFuncs);
 
+        Simulation simulation= new Simulation(uniSize, setSize, sampleSize);
+
+        List<Integer> numList1 = Arrays.asList(0,1,2,3,4,1,2,3,4,0,2,3,4,0,1,3,4,0,1,2,4,0,1,2,3);
+        List<Integer> numList2 = Arrays.asList(0,1,2,3,4,4,0,1,2,3,3,4,0,1,2,2,3,4,0,1,1,2,3,4,0);
+        List<Integer> numList3 = Arrays.asList(0,1,2,3,4,3,4,0,1,2,1,2,3,4,0,4,0,1,2,3,2,3,4,0,1);
 /* ***********************************************OLS**************************************************************** */
         //building the OLSs from the first example from the paper
 //        List<Integer> numList1 = Arrays.asList(0,1,2,3,4,1,2,3,4,0,2,3,4,0,1,3,4,0,1,2,4,0,1,2,3);
@@ -65,44 +70,71 @@ public class Main {
 //        Vector<Integer> ols2 = new Vector<>(numList2);
 
         //building the OLSs from the sets found online
-        List<Integer> numList1 = Arrays.asList(0,1,2,3,4,1,2,3,4,0,2,3,4,0,1,3,4,0,1,2,4,0,1,2,3);
-        Vector<Integer> ols1 = new Vector<>(numList1);
-        List<Integer> numList2 = Arrays.asList(0,1,2,3,4,4,0,1,2,3,3,4,0,1,2,2,3,4,0,1,1,2,3,4,0);
-        Vector<Integer> ols2 = new Vector<>(numList2);
-        List<Integer> numList3 = Arrays.asList(0,1,2,3,4,3,4,0,1,2,1,2,3,4,0,4,0,1,2,3,2,3,4,0,1);
-        Vector<Integer> ols3 = new Vector<>(numList3);
 
-        Vector<Vector<Integer>> ols_vector = new Vector<Vector<Integer>>();
-        ols_vector.add(ols1);
-        ols_vector.add(ols2);
-        ols_vector.add(ols3);
+//        Vector<Integer> ols1 = new Vector<>(numList1);
+//        Vector<Integer> ols2 = new Vector<>(numList2);
+//        Vector<Integer> ols3 = new Vector<>(numList3);
+//
+//        Vector<Vector<Integer>> ols_vector = new Vector<Vector<Integer>>();
+//        ols_vector.add(ols1);
+//        ols_vector.add(ols2);
+//        ols_vector.add(ols3);
+//
+//        MOLS MOLS_example = new MOLS(3,5,ols_vector);
+//
+//        OLS_HF ols_hf = new OLS_HF(5);
+//
+//        ols_hf.set(MOLS_example);
+//
+//        BFOLS bf_ols = new BFOLS(5,4,ols_hf);
+//
+//        SetRandomizer(simulation,bf_ols);
+//        for (int i=0; i<numOfSampleRuns; i++){
+//            SampleRandomizer(simulation,bf_ols);
+//            simulation.statistics();
+//            simulation.falsePositiveCounterInitialize();
+//        }
 
-        OLS ols_example = new OLS(3,5,ols_vector);
+/* ***********************************************OLS**************************************************************** */
+     //trying to use the MOLS() initializer and insert through the function
+     //intialize the MOLS data structure that will hold all the ols of different sizes
+        int s = 5;
+        MOLS mols_data = new MOLS();
+        mols_data.insert_ols(s,numList1);
+        mols_data.insert_ols(s,numList2);
+        mols_data.insert_ols(s,numList3);
 
-        OLS_HF ols_hf = new OLS_HF(5);
+        BFOLS bf_mols = new BFOLS(s,4,mols_data);
 
-        ols_hf.set(ols_example);
-
-        BFOLS bf_ols = new BFOLS(5,4,ols_hf);
-/* ***********************************************POL**************************************************************** */
-        // initializing bloom filter & simulation
-        BFPOL bf_pol = new BFPOL(uniSize, 2, 2);
-        Simulation simulation= new Simulation(uniSize, setSize, sampleSize);
-        boolean randomSet = true;
-        if (randomSet){
-            // randomly choosing a set, updating simulation and adding to bloom filter
-            SetRandomizer(simulation,bf_pol);
-        } else {
-            bf_pol.insert(168);
-            bf_pol.insert(50);
+        if(s*s < uniSize) {
+            System.out.println("Universe size is bigger than ols can represent, might be an error");
         }
-
-        // running all checks
+        SetRandomizer(simulation,bf_mols);
         for (int i=0; i<numOfSampleRuns; i++){
-            SampleRandomizer(simulation,bf_pol);
+            SampleRandomizer(simulation,bf_mols);
             simulation.statistics();
             simulation.falsePositiveCounterInitialize();
         }
+
+/* ***********************************************POL**************************************************************** */
+        // initializing bloom filter & simulation
+//        BFPOL bf_pol = new BFPOL(uniSize, 2, 2);
+
+//        boolean randomSet = true;
+//        if (randomSet){
+//            // randomly choosing a set, updating simulation and adding to bloom filter
+//            SetRandomizer(simulation,bf_pol);
+//        } else {
+//            bf_pol.insert(168);
+//            bf_pol.insert(50);
+//        }
+//
+//        // running all checks
+//        for (int i=0; i<numOfSampleRuns; i++){
+//            SampleRandomizer(simulation,bf_pol);
+//            simulation.statistics();
+//            simulation.falsePositiveCounterInitialize();
+//        }
 
         System.out.println("\nDone!");
     }
