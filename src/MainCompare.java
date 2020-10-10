@@ -30,10 +30,9 @@ public class MainCompare {
     }
 
     public static void main(String[] args) {
-        boolean UsingInputArgs = false;
         int uniSize, setSize, sampleSize;
         int numOfSampleRuns, bloomVecLength, numOfHashFuncs;
-        if (UsingInputArgs){
+        if(args.length == 6){
             // interpreting input arguments
             uniSize = Integer.parseInt(args[0]);
             setSize = Integer.parseInt(args[1]);

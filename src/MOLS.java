@@ -7,9 +7,13 @@ public class MOLS {
      Vector<Vector<Integer>> OLS_vector;   // each OLS is represented in a vector of size s^2
 
      Vector<Vector<Integer>> ols_vector_s_3;
+     Vector<Vector<Integer>> ols_vector_s_4;
      Vector<Vector<Integer>> ols_vector_s_5;
+     Vector<Vector<Integer>> ols_vector_s_7;
+     Vector<Vector<Integer>> ols_vector_s_8;
      Vector<Vector<Integer>> ols_vector_s_9;
      Vector<Vector<Integer>> ols_vector_s_11;
+     Vector<Vector<Integer>> ols_vector_s_19;
 
      public MOLS(int number_of_ols, int size_of_square, Vector<Vector<Integer>> vector_of_OLS) {
           number_of_OLS = number_of_ols;
@@ -21,10 +25,15 @@ public class MOLS {
      //We need to have only one intialization of this object.
      //All the OLSs need to be kept here
      public MOLS(){
-          this.ols_vector_s_3 = new Vector<Vector<Integer>>();
-          this.ols_vector_s_5 = new Vector<Vector<Integer>>();
-          this.ols_vector_s_9 = new Vector<Vector<Integer>>();
-          this.ols_vector_s_11 = new Vector<Vector<Integer>>();
+          // all Vector<Vector<Integer>>
+          this.ols_vector_s_3 = new Vector<>();
+          this.ols_vector_s_4 = new Vector<>();
+          this.ols_vector_s_5 = new Vector<>();
+          this.ols_vector_s_7 = new Vector<>();
+          this.ols_vector_s_8 = new Vector<>();
+          this.ols_vector_s_9 = new Vector<>();
+          this.ols_vector_s_11 = new Vector<>();
+          this.ols_vector_s_19 = new Vector<>();
      }
 
      //Each boomfilter has an OLS size (s) it is working with. To choose the right kind of OLS we use this function
@@ -33,12 +42,20 @@ public class MOLS {
           switch(s){
                case 3:
                     return ols_vector_s_3;
+               case 4:
+                    return ols_vector_s_4;
                case 5:
                     return ols_vector_s_5;
+               case 7:
+                    return ols_vector_s_7;
+               case 8:
+                    return ols_vector_s_8;
                case 9:
                     return ols_vector_s_9;
                case 11:
                     return ols_vector_s_11;
+               case 19:
+                    return ols_vector_s_19;
                default:
                     return null;
           }
