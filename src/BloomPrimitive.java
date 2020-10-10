@@ -5,6 +5,9 @@ public class BloomPrimitive implements BloomFilter {
     private int k; //number of hash functions
     private boolean[] bloomArray;
 
+    public int getM() {
+        return m;
+    }
     public BloomPrimitive(int length, int numOfFunc){
         m = length;
         k = numOfFunc;

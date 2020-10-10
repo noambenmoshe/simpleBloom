@@ -7,6 +7,9 @@ public class BFPowerHash implements BloomFilter{
     private int k; //number of hash functions
     private ArrayList<Boolean> bloomArray;
 
+    public int getM() {
+        return m;
+    }
     public BFPowerHash(int length, int numOfFunc){
         m = length;
         k = numOfFunc;

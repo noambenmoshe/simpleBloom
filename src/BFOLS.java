@@ -6,6 +6,10 @@ public class BFOLS implements BloomFilter {
     private Vector<Integer> bloomFilter;
     private HashFunction hashFunction;
 
+    public int getM() {
+        return m;
+    }
+
     // regular constructor
     public BFOLS(int m, int k, Map<Integer, Boolean> bloom_Filter, HashFunction hash_Function ) {
         this.m = m;
@@ -27,23 +31,25 @@ public class BFOLS implements BloomFilter {
     //inputs: s - represents the square root of the universe size
     //        d - represents the free zone size  / size of set you can insert with out false positives
     public BFOLS(int unisize, int d){
+        MOLS mols_data = new MOLS();
         int s = (int) Math.ceil(Math.pow(unisize, 1.0/(double)2));
+        s =  initializeMOLSData(s, mols_data);
         this.m = s * (d + 1);
         this.k = d + 1;
         this.bloomFilter = new Vector<>();
         OLS_HF ols_hf = new OLS_HF(s);
-        MOLS mols_data = new MOLS();
-        initializeMOLSData(s, mols_data);
+
         ols_hf.set(mols_data);
         this.hashFunction = ols_hf;
 
         System.out.println("BFOLS values s = " + s);
         if (d > mols_data.choose_OLS_vec(s).size() + 1){
+            this.m = -1;
             System.out.println("set is bigger than BF can represent without false positives");
         }
     }
 
-    void initializeMOLSData(int s, MOLS mols_data) {
+    int initializeMOLSData(int s, MOLS mols_data) {
         // 3 mols of s=5 from Ori's paper
         List<Integer> numList5_0_paper = Arrays.asList(0,1,2,3,4,1,2,3,4,0,2,3,4,0,1,3,4,0,1,2,4,0,1,2,3);
         List<Integer> numList5_1_paper = Arrays.asList(0,1,2,3,4,4,0,1,2,3,3,4,0,1,2,2,3,4,0,1,1,2,3,4,0);
@@ -94,24 +100,29 @@ public class BFOLS implements BloomFilter {
         List<Integer> numList19_2 = Arrays.asList(17,2,6,10,14,18,3,7,11,15,19,4,8,12,16,1,5,9,13,1,5,9,13,17,2,6,10,14,18,3,7,11,15,19,4,8,12,16,14,18,3,7,11,15,19,4,8,12,16,1,5,9,13,17,2,6,10,11,15,19,4,8,12,16,1,5,9,13,17,2,6,10,14,18,3,7,8,12,16,1,5,9,13,17,2,6,10,14,18,3,7,11,15,19,4,5,9,13,17,2,6,10,14,18,3,7,11,15,19,4,8,12,16,1,2,6,10,14,18,3,7,11,15,19,4,8,12,16,1,5,9,13,17,18,3,7,11,15,19,4,8,12,16,1,5,9,13,17,2,6,10,14,15,19,4,8,12,16,1,5,9,13,17,2,6,10,14,18,3,7,11,12,16,1,5,9,13,17,2,6,10,14,18,3,7,11,15,19,4,8,9,13,17,2,6,10,14,18,3,7,11,15,19,4,8,12,16,1,5,6,10,14,18,3,7,11,15,19,4,8,12,16,1,5,9,13,17,2,3,7,11,15,19,4,8,12,16,1,5,9,13,17,2,6,10,14,18,19,4,8,12,16,1,5,9,13,17,2,6,10,14,18,3,7,11,15,16,1,5,9,13,17,2,6,10,14,18,3,7,11,15,19,4,8,12,13,17,2,6,10,14,18,3,7,11,15,19,4,8,12,16,1,5,9,10,14,18,3,7,11,15,19,4,8,12,16,1,5,9,13,17,2,6,7,11,15,19,4,8,12,16,1,5,9,13,17,2,6,10,14,18,3,4,8,12,16,1,5,9,13,17,2,6,10,14,18,3,7,11,15,19);
 
         if(s <= 3) {
+            s = 3;
             mols_data.insert_ols(3, numList3_0);
             mols_data.insert_ols(3, numList3_1);
         } else if(s == 4){
+            s = 4;
             mols_data.insert_ols(4, numList4_0);
             mols_data.insert_ols(4, numList4_1);
             mols_data.insert_ols(4, numList4_2);
         } else if(s == 5) {
+            s = 5;
             mols_data.insert_ols(5, numList5_0);
             mols_data.insert_ols(5, numList5_1);
             mols_data.insert_ols(5, numList5_2);
             mols_data.insert_ols(5, numList5_3);
         } else if(s <= 7){
+            s = 7;
             mols_data.insert_ols(7, numList7_0);
             mols_data.insert_ols(7, numList7_1);
             mols_data.insert_ols(7, numList7_2);
             mols_data.insert_ols(7, numList7_3);
             mols_data.insert_ols(7, numList7_4);
         } else if(s == 8){
+            s = 8;
             mols_data.insert_ols(8, numList8_0);
             mols_data.insert_ols(8, numList8_1);
             mols_data.insert_ols(8, numList8_2);
@@ -120,6 +131,7 @@ public class BFOLS implements BloomFilter {
             mols_data.insert_ols(8, numList8_5);
             mols_data.insert_ols(8, numList8_6);
         } else if(s == 9) {
+            s = 9;
             mols_data.insert_ols(9, numList9_0);
             mols_data.insert_ols(9, numList9_1);
             mols_data.insert_ols(9, numList9_2);
@@ -129,14 +141,17 @@ public class BFOLS implements BloomFilter {
             mols_data.insert_ols(9, numList9_6);
             mols_data.insert_ols(9, numList9_7);
         } else if(s <= 11) {
+            s = 11;
             mols_data.insert_ols(11, numList11_0);
             mols_data.insert_ols(11, numList11_1);
             mols_data.insert_ols(11, numList11_2);
         } else if(s <= 19){
+            s = 19;
             mols_data.insert_ols(19, numList19_0);
             mols_data.insert_ols(19, numList19_1);
             mols_data.insert_ols(19, numList19_2);
         }
+        return s;
     }
 
     @Override

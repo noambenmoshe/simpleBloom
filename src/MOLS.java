@@ -39,26 +39,23 @@ public class MOLS {
      //Each boomfilter has an OLS size (s) it is working with. To choose the right kind of OLS we use this function
      //Depending on s we return the right vector
      Vector<Vector<Integer>> choose_OLS_vec (int s){
-          switch(s){
-               case 3:
+          if(s <= 3)
                     return ols_vector_s_3;
-               case 4:
+          else if(s == 4)
                     return ols_vector_s_4;
-               case 5:
-                    return ols_vector_s_5;
-               case 7:
-                    return ols_vector_s_7;
-               case 8:
-                    return ols_vector_s_8;
-               case 9:
-                    return ols_vector_s_9;
-               case 11:
-                    return ols_vector_s_11;
-               case 19:
-                    return ols_vector_s_19;
-               default:
-                    return null;
-          }
+          else if(s == 5)
+               return ols_vector_s_5;
+          else if(s <= 7)
+               return ols_vector_s_7;
+          else if(s == 8)
+               return ols_vector_s_8;
+          else if(s == 9)
+               return ols_vector_s_9;
+          else if(s <= 11)
+               return ols_vector_s_11;
+          else if(s <= 19)
+               return ols_vector_s_19;
+          else return null;
      }
      void insert_ols(int s, List<Integer> num_list){
           Vector<Integer> ols = new Vector<>(num_list);

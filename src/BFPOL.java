@@ -12,6 +12,9 @@ public class BFPOL implements BloomFilter {
         private int base;
         private int n; //universe size;
 
+        public int getM() {
+          return m;
+        }
     //inputs: n - represents the size of the universe
         //        t - an integer such that the t-th root of n in a prime number
         //        d - set maximal size for FPFZ
@@ -50,19 +53,19 @@ public class BFPOL implements BloomFilter {
             //t can not be smaller than 2 so we know this is the "worst" t
             bfpol_vals = calc_t_p_n(n,d, primeTill1000,0,first_greater_num_of_sq_root_of_n,bfpol_vals);
             if ((bfpol_vals.t == -1) ||  (bfpol_vals.n == -1) || (bfpol_vals.p == -1)){
-                System.out.println("Error: did not find right values t = "+ bfpol_vals.t +" p = "+bfpol_vals.p + " n = "+bfpol_vals.n);
-                System.exit(-1);
-            } else
-                System.out.println("BFPOL values t = "+ bfpol_vals.t +"\tp = "+bfpol_vals.p + "\tn = "+bfpol_vals.n);
-
-            this.base = bfpol_vals.p;
-            this.m = ((bfpol_vals.t-1)*d + 1)*base;
-            this.k = d + 1;
-            this.bloomFilter = new Vector<>();
-            this.hashFunction = new POL_HF(base, bfpol_vals.t, bfpol_vals.n);
-            if(((bfpol_vals.t-1)*d+1) >= base) {
-                System.out.println("Error: base = "+ base +" smaller or equal to (t-1)d+1 = "+((bfpol_vals.t-1)*d+1));
-                System.exit(-1);
+                System.out.print("Error: did not find right values t = "+ bfpol_vals.t +" p = "+bfpol_vals.p + " n = "+bfpol_vals.n);
+                System.out.println(" original n = "+n);
+                this.m = -1;
+            } else {
+                System.out.println("BFPOL values t = " + bfpol_vals.t + " p = " + bfpol_vals.p + " n = " + bfpol_vals.n);
+                this.base = bfpol_vals.p;
+                if(((bfpol_vals.t-1)*d+1) >= base) {
+                    System.out.println("Error: base = "+ base +" smaller or equal to (t-1)d+1 = "+((bfpol_vals.t-1)*d+1));
+                }
+                this.m = ((bfpol_vals.t-1)*d + 1)*base;
+                this.k = d + 1;
+                this.bloomFilter = new Vector<>();
+                this.hashFunction = new POL_HF(base, bfpol_vals.t, bfpol_vals.n);
             }
         }
 
