@@ -1,6 +1,7 @@
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.lang.String;
 import java.util.Vector;
 //import java.Integer.parseInt()
 
@@ -140,15 +141,18 @@ public class Main {
 
     public static void main(String[] args) {
         int uniSize, setSize, numOfSampleRuns;
+        String bfType;
 //        int bloomVecLength, numOfHashFuncs;
-        if(args.length == 3){
+        if(args.length == 4){
             // interpreting input arguments
-            uniSize = Integer.parseInt(args[0]);
-            setSize = Integer.parseInt(args[1]);
-            numOfSampleRuns = Integer.parseInt(args[2]);
+            bfType = args[0];
+            uniSize = Integer.parseInt(args[1]);
+            setSize = Integer.parseInt(args[2]);
+            numOfSampleRuns = Integer.parseInt(args[3]);
 //            bloomVecLength = Integer.parseInt(args[3]);
 //            numOfHashFuncs = Integer.parseInt(args[4]);
         } else {
+            bfType = "POL";
             uniSize = 24;
             setSize = 2;
             numOfSampleRuns = 1;
@@ -162,45 +166,50 @@ public class Main {
 
         Simulation simulation= new Simulation(uniSize, setSize, 5); //TODO: either add or remove sample size
 
-/* ***********************************************OLS**************************************************************** */
-     // initializing the MOLS data structure that will hold all the ols of different sizes
-        MOLS mols_data = new MOLS();
-        int s = 5;
+        if(bfType.equals("OLS"))
+        {
+            /* ********************************************OLS******************************************************* */
+            // initializing the MOLS data structure that will hold all the ols of different sizes
+            MOLS mols_data = new MOLS();
+            int s = 5;
 
-        initializeMOLSData(s, mols_data);
+            initializeMOLSData(s, mols_data);
 
-        BFOLS bf_mols = new BFOLS(s,4,mols_data);
+            BFOLS bf_mols = new BFOLS(s,4,mols_data);
 
-        if(s*s < uniSize) {
-            System.out.println("Universe size is bigger than ols can represent");
-            System.exit(0);
+            if(s*s < uniSize) {
+                System.out.println("Universe size is bigger than ols can represent");
+                System.exit(0);
+            }
+            SetRandomizer(simulation,bf_mols);
+            for (int i=0; i<numOfSampleRuns; i++){
+                ScanUniverseElements(simulation,bf_mols);
+                simulation.statistics();
+                simulation.falsePositiveCounterInitialize();
+            }
         }
-        SetRandomizer(simulation,bf_mols);
-        for (int i=0; i<numOfSampleRuns; i++){
-            ScanUniverseElements(simulation,bf_mols);
-            simulation.statistics();
-            simulation.falsePositiveCounterInitialize();
+        else if(bfType.equals("POL"))
+        {
+            /* ***********************************************POL**************************************************************** */
+            // initializing bloom filter & simulation
+            BFPOL bf_pol = new BFPOL(uniSize, 2);
+
+            boolean randomSet = true;
+            if (randomSet){
+                // randomly choosing a set, updating simulation and adding to bloom filter
+                SetRandomizer(simulation,bf_pol);
+            } else {
+                bf_pol.insert(168);
+                bf_pol.insert(50);
+            }
+
+            // running all checks
+            for (int i=0; i<numOfSampleRuns; i++){
+                ScanUniverseElements(simulation,bf_pol);
+                simulation.statistics();
+                simulation.falsePositiveCounterInitialize();
+            }
         }
-
-/* ***********************************************POL**************************************************************** */
-        // initializing bloom filter & simulation
-//        BFPOL bf_pol = new BFPOL(uniSize, 2, 2);
-
-//        boolean randomSet = true;
-//        if (randomSet){
-//            // randomly choosing a set, updating simulation and adding to bloom filter
-//            SetRandomizer(simulation,bf_pol);
-//        } else {
-//            bf_pol.insert(168);
-//            bf_pol.insert(50);
-//        }
-//
-//        // running all checks
-//        for (int i=0; i<numOfSampleRuns; i++){
-//            ScanUniverseElements(simulation,bf_pol);
-//            simulation.statistics();
-//            simulation.falsePositiveCounterInitialize();
-//        }
 
         System.out.println("\nDone!");
     }
