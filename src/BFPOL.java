@@ -39,7 +39,7 @@ public class BFPOL implements BloomFilter {
                     821, 823, 827, 829, 839, 853, 857, 859, 863, 877, 881, 883, 887, 907, 911, 919, 929, 937, 941, 947,
                     953, 967, 971, 977, 983, 991, 997);
             BFPOL_vals bfpol_vals = new BFPOL_vals();
-            int square_root_of_n = (int) Math.round(Math.pow(n, 1.0/(double)2));
+            int square_root_of_n = (int) Math.ceil(Math.pow(n, 1.0/(double)2));
             if(square_root_of_n > 1000){
                 System.out.println("Error: n is too big. We support max of n = 1000^2");
             }
@@ -53,7 +53,7 @@ public class BFPOL implements BloomFilter {
                 System.out.println("Error: did not find right values t = "+ bfpol_vals.t +" p = "+bfpol_vals.p + " n = "+bfpol_vals.n);
                 System.exit(-1);
             } else
-                System.out.println("BFPOL values t = "+ bfpol_vals.t +" p = "+bfpol_vals.p + " n = "+bfpol_vals.n);
+                System.out.println("BFPOL values t = "+ bfpol_vals.t +"\tp = "+bfpol_vals.p + "\tn = "+bfpol_vals.n);
 
             this.base = bfpol_vals.p;
             this.m = ((bfpol_vals.t-1)*d + 1)*base;
