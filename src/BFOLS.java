@@ -34,19 +34,21 @@ public class BFOLS implements BloomFilter {
         MOLS mols_data = new MOLS();
         int s = (int) Math.ceil(Math.pow(unisize, 1.0/(double)2));
         s =  initializeMOLSData(s, mols_data);
-        this.m = s * (d + 1);
-        this.k = d + 1;
-        this.bloomFilter = new Vector<>();
-        OLS_HF ols_hf = new OLS_HF(s);
+        if(s != -1){
+            this.m = s * (d + 1);
+            this.k = d + 1;
+            this.bloomFilter = new Vector<>();
+            OLS_HF ols_hf = new OLS_HF(s);
 
-        ols_hf.set(mols_data);
-        this.hashFunction = ols_hf;
+            ols_hf.set(mols_data);
+            this.hashFunction = ols_hf;
 
-        System.out.println("BFOLS values s = " + s);
-        if (d > mols_data.choose_OLS_vec(s).size() + 1){
-            this.m = -1;
-            System.out.println("set is bigger than BF can represent without false positives");
-        }
+            System.out.println("BFOLS values s = " + s);
+            if (d > mols_data.choose_OLS_vec(s).size() + 1){
+                this.m = -1;
+                System.out.println("set is bigger than BF can represent without false positives");
+            }
+        }else this.m = -1;
     }
 
     int initializeMOLSData(int s, MOLS mols_data) {
@@ -168,6 +170,10 @@ public class BFOLS implements BloomFilter {
             mols_data.insert_ols(23, numList23_0);
             mols_data.insert_ols(23, numList23_1);
             mols_data.insert_ols(23, numList23_2);
+        }
+        else {
+            s = -1;
+            System.out.println("We do not support this size");
         }
         return s;
     }

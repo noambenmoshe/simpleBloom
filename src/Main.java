@@ -1,3 +1,6 @@
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 import java.io.FileWriter;
 import java.lang.String;
@@ -51,21 +54,25 @@ public class Main {
             setSize = Integer.parseInt(args[2]);
             numOfSampleRuns = Integer.parseInt(args[3]);
         } else {
-            bfType = "OLS";
+            bfType = "POL";
             uniSize = 24;
             setSize = 2;
-            numOfSampleRuns = 1;
+            numOfSampleRuns = 10;
 
         }
         // Printing Parameters
         System.out.println("Running a test with:\n\tUniverse Size\t\t"+uniSize+"\t\t Set Size\t\t\t"+setSize);
         System.out.println("\tNumber of runs\t\t"+numOfSampleRuns);
 
-        String filePOLName ="output_for_graphs_pol.txt";
-        String fileOLSName ="output_for_graphs_ols.txt";
+        String filePOLLengthName ="output_for_graphs_pol_length.txt";
+        String fileOLSLengthName ="output_for_graphs_ols_length.txt";
+        String filePOLFalsePosName ="output_for_graphs_pol_FP.txt";
+        String fileOLSFalsePosName ="output_for_graphs_ols_FP.txt";
         try {
-            File filePOL = new File(filePOLName);
-            File fileOLS = new File(fileOLSName);
+            File filePOL = new File(filePOLLengthName);
+            File fileOLS = new File(fileOLSLengthName);
+            File filePOLFalsePos = new File(filePOLFalsePosName);
+            File fileOLSFalsePos = new File(fileOLSFalsePosName);
             if (filePOL.createNewFile()) {
                 System.out.println("File created: " + filePOL.getName());
             } else {
@@ -76,66 +83,105 @@ public class Main {
             } else {
                 System.out.println("File already exists.");
             }
+            if (filePOLFalsePos.createNewFile()) {
+                System.out.println("File created: " + filePOLFalsePos.getName());
+            } else {
+                System.out.println("File already exists.");
+            }
+            if (fileOLSFalsePos.createNewFile()) {
+                System.out.println("File created: " + fileOLSFalsePos.getName());
+            } else {
+                System.out.println("File already exists.");
+            }
         } catch (IOException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
 
 
-        Simulation simulation= new Simulation(uniSize, setSize, 5); //TODO: either add or remove sample size
+        Simulation simulation;
 
         if(bfType.equals("OLS"))
         {
             /* ********************************************OLS******************************************************* */
-            try {
-                FileWriter myWriter = new FileWriter(fileOLSName);
-                myWriter.write("OLS\n");
+            if(true){
+                try {
+                    FileWriter myWriter = new FileWriter(fileOLSLengthName);
+                    myWriter.write("OLS\n");
 
-                add_data_to_graph(3, myWriter,bfType);
-                add_data_to_graph(4, myWriter,bfType);
-                add_data_to_graph(7, myWriter,bfType);
+                    create_data_for_graph_length(3, myWriter,bfType);
+                    create_data_for_graph_length(4, myWriter,bfType);
+                    create_data_for_graph_length(7, myWriter,bfType);
 
-                myWriter.close();
-                System.out.println("Successfully wrote to the file.");
-            } catch (IOException e) {
-                System.out.println("An error occurred.");
-                e.printStackTrace();
+                    myWriter.close();
+                    System.out.println("Successfully wrote to the file.");
+                } catch (IOException e) {
+                    System.out.println("An error occurred.");
+                    e.printStackTrace();
+                }
+
+            }
+        else{
+                try {
+                    FileWriter myWriter = new FileWriter(fileOLSFalsePosName);
+                    myWriter.write("OLS\n");
+                    uniSize = 256;
+                    int d = 3;
+                    double avg;
+                    myWriter.write("d = "+d+" n = "+uniSize+"\n");
+                    List<Double> statistics = new java.util.ArrayList<>(Collections.emptyList());
+                    BFOLS bf_mols = new BFOLS(uniSize ,d);
+                    for(int sampleSize = 0; sampleSize < 33; sampleSize++){
+                        simulation = new Simulation(uniSize, d, sampleSize);
+                        SetRandomizer(simulation,bf_mols);
+                        for (int i=0; i<numOfSampleRuns; i++){
+                            ScanUniverseElements(simulation,bf_mols);
+                            System.out.println("stat double =" + simulation.statistics());
+                            statistics.add(simulation.statistics());
+                            simulation.falsePositiveCounterInitialize();
+                        }
+                        avg = calc_stats_from_simuli(statistics);
+                        myWriter.write(sampleSize+","+avg+"\n");
+                        statistics.clear();
+                    }
+
+                    myWriter.close();
+                    System.out.println("Successfully wrote to the file.");
+                } catch (IOException e) {
+                    System.out.println("An error occurred.");
+                    e.printStackTrace();
+                }
             }
 
 
-            // initializing the MOLS data structure that will hold all the ols of different sizes
-            BFOLS bf_mols = new BFOLS(uniSize ,setSize);
 
-            SetRandomizer(simulation,bf_mols);
-            for (int i=0; i<numOfSampleRuns; i++){
-                ScanUniverseElements(simulation,bf_mols);
-                simulation.statistics();
-                simulation.falsePositiveCounterInitialize();
-            }
         }
         else if(bfType.equals("POL"))
         {
             /* ***********************************************POL**************************************************************** */
             // initializing bloom filter & simulation
             //for graphs
-            try {
-                FileWriter myWriter = new FileWriter(filePOLName);
-                myWriter.write("POL\n");
+            if(false){
+                try {
+                    FileWriter myWriter = new FileWriter(filePOLLengthName);
+                    myWriter.write("POL\n");
 
-                add_data_to_graph(3, myWriter,bfType);
-                add_data_to_graph(4, myWriter,bfType);
-                add_data_to_graph(7, myWriter,bfType);
+                    create_data_for_graph_length(3, myWriter,bfType);
+                    create_data_for_graph_length(4, myWriter,bfType);
+                    create_data_for_graph_length(7, myWriter,bfType);
 
-                myWriter.close();
-                System.out.println("Successfully wrote to the file.");
-            } catch (IOException e) {
-                System.out.println("An error occurred.");
-                e.printStackTrace();
+                    myWriter.close();
+                    System.out.println("Successfully wrote to the file.");
+                } catch (IOException e) {
+                    System.out.println("An error occurred.");
+                    e.printStackTrace();
+                }
             }
 
-            BFPOL bf_pol = new BFPOL(uniSize, 2);
 
-            if (true){ //Change if you want to choose the set by yourself
+            BFPOL bf_pol = new BFPOL(361, 3);
+            simulation = new Simulation(uniSize, setSize, 5); //TODO: either add or remove sample size
+            if (false){ //Change if you want to choose the set by yourself
                 // randomly choosing a set, updating simulation and adding to bloom filter
                 SetRandomizer(simulation,bf_pol);
             } else {
@@ -154,7 +200,7 @@ public class Main {
         System.out.println("\nDone!");
     }
 
-    private static void add_data_to_graph(int d, FileWriter myWriter, String bfType) throws IOException {
+    private static void create_data_for_graph_length(int d, FileWriter myWriter, String bfType) throws IOException {
         int n;
         BloomFilter bf;
         myWriter.write(d+"\n");
@@ -171,5 +217,14 @@ public class Main {
                 myWriter.write(n+","+bf.getM()+"\n");
             }
         }
+    }
+
+    private static double calc_stats_from_simuli(List<Double> stats){
+        double avg = 0;
+        for(double i: stats) {
+            avg += i;
+        }
+        avg = avg/stats.size();
+        return avg;
     }
 }

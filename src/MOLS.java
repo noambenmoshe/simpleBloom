@@ -13,7 +13,9 @@ public class MOLS {
      Vector<Vector<Integer>> ols_vector_s_8;
      Vector<Vector<Integer>> ols_vector_s_9;
      Vector<Vector<Integer>> ols_vector_s_11;
+     Vector<Vector<Integer>> ols_vector_s_16;
      Vector<Vector<Integer>> ols_vector_s_19;
+     Vector<Vector<Integer>> ols_vector_s_23;
 
      public MOLS(int number_of_ols, int size_of_square, Vector<Vector<Integer>> vector_of_OLS) {
           number_of_OLS = number_of_ols;
@@ -33,7 +35,9 @@ public class MOLS {
           this.ols_vector_s_8 = new Vector<>();
           this.ols_vector_s_9 = new Vector<>();
           this.ols_vector_s_11 = new Vector<>();
+          this.ols_vector_s_16 = new Vector<>();
           this.ols_vector_s_19 = new Vector<>();
+          this.ols_vector_s_23 = new Vector<>();
      }
 
      //Each boomfilter has an OLS size (s) it is working with. To choose the right kind of OLS we use this function
@@ -53,8 +57,12 @@ public class MOLS {
                return ols_vector_s_9;
           else if(s <= 11)
                return ols_vector_s_11;
+          else if(s <=16)
+               return ols_vector_s_16;
           else if(s <= 19)
                return ols_vector_s_19;
+          else if(s <= 23)
+               return ols_vector_s_23;
           else return null;
      }
      void insert_ols(int s, List<Integer> num_list){

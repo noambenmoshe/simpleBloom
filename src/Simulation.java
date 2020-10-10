@@ -46,10 +46,11 @@ public class Simulation {
         return universeVector.containsKey(randNum);
     }
 
-    void statistics(){
+    double statistics(){
         double percent = 100*falsePositiveCounter/(double)n;
         //System.out.println("\nSimulation parameters: n="+ n +" set size="+sizeOfS+ " sample size="+sizeOfSample);
         System.out.println("\nNumber of false positives: " + falsePositiveCounter);
         System.out.println("Percent of false positives compared to size of sample: " + percent +"%\n");
+    return percent;
     }
 }
