@@ -27,7 +27,7 @@ public class Main {
             boolean bloomAns = bloomFilter.search(rand);
             if (bloomAns && !inSet) {
                 sim.falsePositiveCounterIncrement();
-                System.out.println("False Positive number: " + rand + "\n");
+                //System.out.println("False Positive number: " + rand + "\n");
             }
         }
     }
@@ -38,7 +38,7 @@ public class Main {
             boolean bloomAns = bloomFilter.search(i);
             if (bloomAns && !inSet) {
                 sim.falsePositiveCounterIncrement();
-                System.out.println("False Positive number: " + i + "\n");
+                //System.out.println("False Positive number: " + i + "\n");
             }
         }
     }
@@ -176,25 +176,55 @@ public class Main {
                     System.out.println("An error occurred.");
                     e.printStackTrace();
                 }
+            }else{
+                try {
+                    FileWriter myWriter = new FileWriter(filePOLFalsePosName);
+                    myWriter.write("POL\n");
+                    uniSize = 343;
+                    int d = 3;
+                    double avg;
+                    myWriter.write("d = "+d+" n = "+uniSize+"\n");
+                    List<Double> statistics = new java.util.ArrayList<>(Collections.emptyList());
+                    BFPOL bf_pol = new BFPOL(uniSize ,d);
+                    for(int sampleSize = 0; sampleSize < 33; sampleSize++){
+                        simulation = new Simulation(uniSize, d, sampleSize);
+                        SetRandomizer(simulation,bf_pol);
+                        for (int i=0; i<numOfSampleRuns; i++){
+                            ScanUniverseElements(simulation,bf_pol);
+                            System.out.println("stat double =" + simulation.statistics());
+                            statistics.add(simulation.statistics());
+                            simulation.falsePositiveCounterInitialize();
+                        }
+                        avg = calc_stats_from_simuli(statistics);
+                        myWriter.write(sampleSize+","+avg+"\n");
+                        statistics.clear();
+                    }
+
+                    myWriter.close();
+                    System.out.println("Successfully wrote to the file.");
+                } catch (IOException e) {
+                    System.out.println("An error occurred.");
+                    e.printStackTrace();
+                }
             }
 
 
-            BFPOL bf_pol = new BFPOL(361, 3);
+            //BFPOL bf_pol = new BFPOL(361, 3);
             simulation = new Simulation(uniSize, setSize, 5); //TODO: either add or remove sample size
             if (false){ //Change if you want to choose the set by yourself
                 // randomly choosing a set, updating simulation and adding to bloom filter
-                SetRandomizer(simulation,bf_pol);
+                //SetRandomizer(simulation,bf_pol);
             } else {
-                bf_pol.insert(168);
-                bf_pol.insert(50);
+                //bf_pol.insert(168);
+                //bf_pol.insert(50);
             }
 
             // running all checks
-            for (int i=0; i<numOfSampleRuns; i++){
-                ScanUniverseElements(simulation,bf_pol);
-                simulation.statistics();
-                simulation.falsePositiveCounterInitialize();
-            }
+//            for (int i=0; i<numOfSampleRuns; i++){
+//                ScanUniverseElements(simulation,bf_pol);
+//                simulation.statistics();
+//                simulation.falsePositiveCounterInitialize();
+//            }
         }
 
         System.out.println("\nDone!");
