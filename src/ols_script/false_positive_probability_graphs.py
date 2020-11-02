@@ -39,10 +39,11 @@ def createDictionary(type):
 def plotVecSizeByUniSize(d):
     fig = go.Figure()
     fig.add_trace(
-        go.Scatter(x=[pol_dict[d]['setSizeList']], y=pol_dict[d]['fpPercent'], name='POL',
+        # go.Scatter(x=[math.log(x, 2) for x in pol_dict[d]['universeSizeList']], y=pol_dict[d]['bfSize'], name='POL',
+        go.Scatter(x=pol_dict[d]['setSizeList'], y=pol_dict[d]['fpPercent'], name='POL',
                    line=dict(color='firebrick', width=4)))
     fig.add_trace(
-        go.Scatter(x=[ols_dict[d]['setSizeList']], y=ols_dict[d]['fpPercent'], name='OLS',
+        go.Scatter(x=ols_dict[d]['setSizeList'], y=ols_dict[d]['fpPercent'], name='OLS',
                    line=dict(color='royalblue', width=4, dash='dash')))
     fig.update_layout(title=f'Maximal FPFZ Set Size d={d}',
                       xaxis_title=r"$\text{Set Size } 2^{x}$",
