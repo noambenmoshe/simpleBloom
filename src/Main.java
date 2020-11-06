@@ -1,4 +1,3 @@
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -11,10 +10,14 @@ public class Main {
     static void SetRandomizer(Simulation sim, BloomFilter bloomFilter){
         Random randClass = new Random();
 
-        for(int i = 0; i < sim.getSizeOfS(); i++){
+        for(int i = 0; i < sim.getSizeOfSample(); i++){
             int rand = randClass.nextInt(sim.getN());
             sim.insertToUniverse(rand);
             bloomFilter.insert(rand);
+            System.out.println("BF insert: " + rand + "\n");
+            if(bloomFilter.getSize() == 21){
+                //DEBUG
+            };
         }
     }
 
@@ -34,11 +37,16 @@ public class Main {
 
     static void ScanUniverseElements(Simulation sim, BloomFilter bloomFilter) {
         for (int i = 0; i < sim.getN(); i++) {
+
+
             boolean inSet = sim.searchSet(i);
             boolean bloomAns = bloomFilter.search(i);
+            if(bloomFilter.getSize() == 21){
+                //DEBUG
+            };
             if (bloomAns && !inSet) {
                 sim.falsePositiveCounterIncrement();
-                //System.out.println("False Positive number: " + i + "\n");
+                System.out.println("False Positive number: " + i + "\n");
             }
         }
     }
@@ -55,13 +63,13 @@ public class Main {
             numOfSampleRuns = Integer.parseInt(args[3]);
         } else {
             bfType = "POL";
-            uniSize = 24;
-            setSize = 2;
-            numOfSampleRuns = 10;
+            //uniSize = 24;
+            //setSize = 2;
+            numOfSampleRuns = 1; //TODO change back to 10
 
         }
         // Printing Parameters
-        System.out.println("Running a test with:\n\tUniverse Size\t\t"+uniSize+"\t\t Set Size\t\t\t"+setSize);
+        System.out.println("Running a test with:\n\tBF type\t\t"+bfType);
         System.out.println("\tNumber of runs\t\t"+numOfSampleRuns);
 
         String filePOLLengthName ="output_for_graphs_pol_length.txt";
@@ -104,8 +112,9 @@ public class Main {
         if(bfType.equals("OLS"))
         {
             /* ********************************************OLS******************************************************* */
-            if(true){
+            if(false){
                 try {
+                    System.out.println("Calculating OLS filter length graph.");
                     FileWriter myWriter = new FileWriter(fileOLSLengthName);
                     myWriter.write("OLS\n");
 
@@ -123,15 +132,17 @@ public class Main {
             }
         else{
                 try {
+                    System.out.println("Calculating OLS False Positive graph.");
                     FileWriter myWriter = new FileWriter(fileOLSFalsePosName);
                     myWriter.write("OLS\n");
-                    uniSize = 256;
+                    uniSize = 25; //TODO go back to 256
                     int d = 3;
                     double avg;
                     myWriter.write("d = "+d+" n = "+uniSize+"\n");
                     List<Double> statistics = new java.util.ArrayList<>(Collections.emptyList());
                     BFOLS bf_mols = new BFOLS(uniSize ,d);
-                    for(int sampleSize = 0; sampleSize < 33; sampleSize++){
+                    for(int sampleSize = 0; sampleSize < 2; sampleSize++){
+                        System.out.println("Insert "+sampleSize+" elements to BF.");
                         simulation = new Simulation(uniSize, d, sampleSize);
                         SetRandomizer(simulation,bf_mols);
                         for (int i=0; i<numOfSampleRuns; i++){
@@ -163,6 +174,7 @@ public class Main {
             //for graphs
             if(false){
                 try {
+                    System.out.println("Calculating POL filter length graph.");
                     FileWriter myWriter = new FileWriter(filePOLLengthName);
                     myWriter.write("POL\n");
 
@@ -178,6 +190,7 @@ public class Main {
                 }
             }else{
                 try {
+                    System.out.println("Calculating POL False Positive graph.");
                     FileWriter myWriter = new FileWriter(filePOLFalsePosName);
                     myWriter.write("POL\n");
                     uniSize = 343;
@@ -186,12 +199,16 @@ public class Main {
                     myWriter.write("d = "+d+" n = "+uniSize+"\n");
                     List<Double> statistics = new java.util.ArrayList<>(Collections.emptyList());
                     BFPOL bf_pol = new BFPOL(uniSize ,d);
-                    for(int sampleSize = 0; sampleSize < 33; sampleSize++){
+                    for(int sampleSize = 0; sampleSize < 4; sampleSize++){
+                        System.out.println("Insert "+sampleSize+" elements to BF.");
                         simulation = new Simulation(uniSize, d, sampleSize);
                         SetRandomizer(simulation,bf_pol);
                         for (int i=0; i<numOfSampleRuns; i++){
+                            if(bf_pol.getSize() == 21){
+                                //DEBUG
+                            };
                             ScanUniverseElements(simulation,bf_pol);
-                            System.out.println("stat double =" + simulation.statistics());
+
                             statistics.add(simulation.statistics());
                             simulation.falsePositiveCounterInitialize();
                         }
@@ -210,7 +227,7 @@ public class Main {
 
 
             //BFPOL bf_pol = new BFPOL(361, 3);
-            simulation = new Simulation(uniSize, setSize, 5); //TODO: either add or remove sample size
+            //simulation = new Simulation(uniSize, setSize, 5); //TODO: either add or remove sample size
             if (false){ //Change if you want to choose the set by yourself
                 // randomly choosing a set, updating simulation and adding to bloom filter
                 //SetRandomizer(simulation,bf_pol);

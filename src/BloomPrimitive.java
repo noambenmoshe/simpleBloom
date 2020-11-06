@@ -8,6 +8,9 @@ public class BloomPrimitive implements BloomFilter {
     public int getM() {
         return m;
     }
+    public int getSize(){
+        return bloomArray.length;
+    }
     public BloomPrimitive(int length, int numOfFunc){
         m = length;
         k = numOfFunc;

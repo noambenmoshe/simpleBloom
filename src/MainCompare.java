@@ -5,7 +5,7 @@ public class MainCompare {
 
     static void SetRandomizer(Simulation sim, Simulation sim2, BloomFilter bloomFilter,  BloomFilter bloomFilter2){
         Random randClass = new Random();
-        for(int i = 0; i < sim.getSizeOfS(); i++){
+        for(int i = 0; i < sim.getD(); i++){
             int rand = randClass.nextInt(sim.getN());
             sim.insertToUniverse(rand);
             sim2.insertToUniverse(rand);

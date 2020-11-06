@@ -9,7 +9,9 @@ public class BFOLS implements BloomFilter {
     public int getM() {
         return m;
     }
-
+    public int getSize(){
+        return bloomFilter.size();
+    }
     // regular constructor
     public BFOLS(int m, int k, Map<Integer, Boolean> bloom_Filter, HashFunction hash_Function ) {
         this.m = m;
@@ -38,7 +40,7 @@ public class BFOLS implements BloomFilter {
             this.m = s * (d + 1);
             this.k = d + 1;
             this.bloomFilter = new Vector<>();
-            OLS_HF ols_hf = new OLS_HF(s);
+            OLS_HF ols_hf = new OLS_HF(s,d);
 
             ols_hf.set(mols_data);
             this.hashFunction = ols_hf;
@@ -65,10 +67,11 @@ public class BFOLS implements BloomFilter {
         List<Integer> numList4_1 = Arrays.asList(1,2,3,4,3,4,1,2,4,3,2,1,2,1,4,3);
         List<Integer> numList4_2 = Arrays.asList(1,2,3,4,4,3,2,1,2,1,4,3,3,4,1,2);
         // 4 of s=5
-        List<Integer> numList5_0 = Arrays.asList(1,2,3,4,5,2,3,4,5,1,3,4,5,1,2,4,5,1,2,3,5,1,2,3,4);
-        List<Integer> numList5_1 = Arrays.asList(1,2,3,4,5,5,1,2,3,4,4,5,1,2,3,3,4,5,1,2,2,3,4,5,1);
-        List<Integer> numList5_2 = Arrays.asList(1,2,3,4,5,4,5,1,2,3,2,3,4,5,1,5,1,2,3,4,3,4,5,1,2);
-        List<Integer> numList5_3 = Arrays.asList(1,2,3,4,5,3,4,5,1,2,5,1,2,3,4,2,3,4,5,1,4,5,1,2,3);
+        List<Integer> numList5_0 = Arrays.asList(0,1,2,3,4,1,2,3,4,0,2,3,4,0,1,3,4,0,1,2,4,0,1,2,3);
+        List<Integer> numList5_1 = Arrays.asList(0,1,2,3,4,4,0,1,2,3,3,4,0,1,2,2,3,4,0,1,1,2,3,4,0);
+        //List<Integer> numList5_2 = Arrays.asList(0,1,2,3,4,3,4,0,1,2,1,2,3,4,0,4,0,1,2,3,2,3,4,0,1);
+        //List<Integer> numList5_3 = Arrays.asList(0,1,2,3,4,2,3,4,0,1,4,0,1,2,3,1,2,3,4,0,3,4,0,1,2);
+
         // 5 of s=7
         List<Integer> numList7_0 = Arrays.asList(1,2,3,4,5,6,7,2,3,4,5,6,7,1,3,4,5,6,7,1,2,4,5,6,7,1,2,3,5,6,7,1,2,3,4,6,7,1,2,3,4,5,7,1,2,3,4,5,6);
         List<Integer> numList7_1 = Arrays.asList(1,2,3,4,5,6,7,7,1,2,3,4,5,6,6,7,1,2,3,4,5,5,6,7,1,2,3,4,4,5,6,7,1,2,3,3,4,5,6,7,1,2,2,3,4,5,6,7,1);
@@ -122,8 +125,8 @@ public class BFOLS implements BloomFilter {
             s = 5;
             mols_data.insert_ols(5, numList5_0);
             mols_data.insert_ols(5, numList5_1);
-            mols_data.insert_ols(5, numList5_2);
-            mols_data.insert_ols(5, numList5_3);
+       //     mols_data.insert_ols(5, numList5_2);
+       //     mols_data.insert_ols(5, numList5_3);
         } else if(s <= 7){
             s = 7;
             mols_data.insert_ols(7, numList7_0);

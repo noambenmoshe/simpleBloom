@@ -15,6 +15,9 @@ public class BFPOL implements BloomFilter {
         public int getM() {
           return m;
         }
+        public int getSize(){
+            return bloomFilter.size();
+        }
     //inputs: n - represents the size of the universe
         //        t - an integer such that the t-th root of n in a prime number
         //        d - set maximal size for FPFZ
@@ -65,7 +68,7 @@ public class BFPOL implements BloomFilter {
                 this.m = ((bfpol_vals.t-1)*d + 1)*base;
                 this.k = d + 1;
                 this.bloomFilter = new Vector<>();
-                this.hashFunction = new POL_HF(base, bfpol_vals.t, bfpol_vals.n);
+                this.hashFunction = new POL_HF(base, bfpol_vals.t, d);
             }
         }
 
@@ -147,3 +150,4 @@ public class BFPOL implements BloomFilter {
             return  true;
         }
 }
+

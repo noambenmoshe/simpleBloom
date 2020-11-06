@@ -10,6 +10,9 @@ public class BFPowerHash implements BloomFilter{
     public int getM() {
         return m;
     }
+    public int getSize(){
+        return bloomArray.size();
+    }
     public BFPowerHash(int length, int numOfFunc){
         m = length;
         k = numOfFunc;

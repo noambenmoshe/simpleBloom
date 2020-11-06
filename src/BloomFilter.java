@@ -4,6 +4,7 @@ public interface BloomFilter {
 
      void insert(int number);
      boolean search(int number);
+     int getSize();
      int getM();
 
 }

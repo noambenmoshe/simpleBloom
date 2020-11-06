@@ -6,10 +6,12 @@ public class OLS_HF implements HashFunction {
     // each Vector (mask-Vector) will contain which bits should be 1 for the key integer, according to our OLSs
     private Map<Integer,  Vector<Integer>> numbersBitMask;
     int s; //s is the square root of the universe size
+    int d; //d is the number of elements that can be inserted with FPFZ
     // the constructor initializes a map with universeSize elements (=keys), and a mask-Vector
     // input s is the square root of the universe size
-    public OLS_HF(int s){
+    public OLS_HF(int s, int d){
         this.s = s;
+        this.d = d;
         numbersBitMask = new HashMap<>();
         for(int i=0; i<s*s; i++){
             numbersBitMask.put(i,new Vector<>());
@@ -24,8 +26,11 @@ public class OLS_HF implements HashFunction {
     public void set(MOLS MOLS_object) {
         int ols_num =  2; // We already added 2 additional matrices
         Vector<Vector<Integer>> OLS_vec = MOLS_object.choose_OLS_vec(s);
-        for (Vector<Integer> ols: OLS_vec){
+        int num_of_ols_needed =  this.d -1;
+        //for (Vector<Integer> ols: OLS_vec){
+        for ( int j= 0; j<num_of_ols_needed; j++){
             int i = 0;
+            Vector<Integer> ols = OLS_vec.get(j);
             //updating the map with one OLS at a time
             for (int bit: ols){
                 // multiplying by ols_num in order to correspond to the ols_num (3rd,4th,...) S bits
