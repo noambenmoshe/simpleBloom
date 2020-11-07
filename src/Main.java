@@ -59,8 +59,7 @@ public class Main {
             bfType = "POL";
             //uniSize = 24;
             //setSize = 2;
-            numOfSampleRuns = 1; //TODO change back to 10
-
+            numOfSampleRuns = 10;
         }
         // Printing Parameters
         System.out.println("Running a test with:\n\tBF type\t\t"+bfType);
@@ -192,7 +191,7 @@ public class Main {
                     double avg;
                     myWriter.write("d = "+d+" n = "+uniSize+"\n");
                     List<Double> statistics = new java.util.ArrayList<>(Collections.emptyList());
-                    for(int sampleSize = 0; sampleSize < 4; sampleSize++){
+                    for(int sampleSize = 0; sampleSize < 33; sampleSize++){
                         System.out.println("Insert "+sampleSize+" elements to BF.");
                         BFPOL bf_pol = new BFPOL(uniSize ,d);
                         simulation = new Simulation(uniSize, d, sampleSize);
