@@ -15,9 +15,6 @@ public class Main {
             sim.insertToUniverse(rand);
             bloomFilter.insert(rand);
             System.out.println("BF insert: " + rand + "\n");
-            if(bloomFilter.getSize() == 21){
-                System.out.println("BF 21.");
-            };
         }
     }
 
@@ -41,9 +38,6 @@ public class Main {
 
             boolean inSet = sim.searchSet(i);
             boolean bloomAns = bloomFilter.search(i);
-            if(bloomFilter.getSize() == 21){
-                System.out.println("BF 21.");
-            };
             if (bloomAns && !inSet) {
                 sim.falsePositiveCounterIncrement();
                 System.out.println("False Positive number: " + i + "\n");
@@ -198,16 +192,12 @@ public class Main {
                     double avg;
                     myWriter.write("d = "+d+" n = "+uniSize+"\n");
                     List<Double> statistics = new java.util.ArrayList<>(Collections.emptyList());
-                    BFPOL bf_pol = new BFPOL(uniSize ,d);
                     for(int sampleSize = 0; sampleSize < 4; sampleSize++){
                         System.out.println("Insert "+sampleSize+" elements to BF.");
+                        BFPOL bf_pol = new BFPOL(uniSize ,d);
                         simulation = new Simulation(uniSize, d, sampleSize);
                         SetRandomizer(simulation,bf_pol);
                         for (int i=0; i<numOfSampleRuns; i++){
-                            if(bf_pol.getSize() == 21){
-                                //DEBUG
-                                System.out.println("bf = 21");
-                            };
                             ScanUniverseElements(simulation,bf_pol);
 
                             statistics.add(simulation.statistics());
