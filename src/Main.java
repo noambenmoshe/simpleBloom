@@ -16,7 +16,7 @@ public class Main {
             bloomFilter.insert(rand);
             System.out.println("BF insert: " + rand + "\n");
             if(bloomFilter.getSize() == 21){
-                //DEBUG
+                System.out.println("BF 21.");
             };
         }
     }
@@ -42,7 +42,7 @@ public class Main {
             boolean inSet = sim.searchSet(i);
             boolean bloomAns = bloomFilter.search(i);
             if(bloomFilter.getSize() == 21){
-                //DEBUG
+                System.out.println("BF 21.");
             };
             if (bloomAns && !inSet) {
                 sim.falsePositiveCounterIncrement();
@@ -206,6 +206,7 @@ public class Main {
                         for (int i=0; i<numOfSampleRuns; i++){
                             if(bf_pol.getSize() == 21){
                                 //DEBUG
+                                System.out.println("bf = 21");
                             };
                             ScanUniverseElements(simulation,bf_pol);
 
