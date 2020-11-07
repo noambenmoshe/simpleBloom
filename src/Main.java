@@ -56,7 +56,7 @@ public class Main {
             setSize = Integer.parseInt(args[2]);
             numOfSampleRuns = Integer.parseInt(args[3]);
         } else {
-            bfType = "POL";
+            bfType = "OLS";
             //uniSize = 24;
             //setSize = 2;
             numOfSampleRuns = 10;
@@ -128,19 +128,19 @@ public class Main {
                     System.out.println("Calculating OLS False Positive graph.");
                     FileWriter myWriter = new FileWriter(fileOLSFalsePosName);
                     myWriter.write("OLS\n");
-                    uniSize = 25; //TODO go back to 256
+                    uniSize = 256;
                     int d = 3;
                     double avg;
                     myWriter.write("d = "+d+" n = "+uniSize+"\n");
                     List<Double> statistics = new java.util.ArrayList<>(Collections.emptyList());
-                    BFOLS bf_mols = new BFOLS(uniSize ,d);
-                    for(int sampleSize = 0; sampleSize < 2; sampleSize++){
+                    for(int sampleSize = 0; sampleSize < 33; sampleSize++){
                         System.out.println("Insert "+sampleSize+" elements to BF.");
+                        BFOLS bf_mols = new BFOLS(uniSize ,d);
                         simulation = new Simulation(uniSize, d, sampleSize);
                         SetRandomizer(simulation,bf_mols);
                         for (int i=0; i<numOfSampleRuns; i++){
                             ScanUniverseElements(simulation,bf_mols);
-                            System.out.println("stat double =" + simulation.statistics());
+                            //System.out.println("stat double =" + simulation.statistics());
                             statistics.add(simulation.statistics());
                             simulation.falsePositiveCounterInitialize();
                         }
