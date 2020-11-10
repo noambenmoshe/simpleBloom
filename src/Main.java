@@ -19,9 +19,9 @@ public class Main {
     }
 
     //Randomize numbers to check if the bloomfilter returns a correct answer
-    static void SampleRandomizer(Simulation sim, BloomFilter bloomFilter) {
+    static void SampleRandomizer(Simulation sim, BloomFilter bloomFilter, int num_of_checks) {
         Random randClass = new Random();
-        for (int i = 0; i < sim.getSizeOfSample(); i++) {
+        for (int i = 0; i < num_of_checks; i++) {
             int rand = randClass.nextInt(sim.getN());
             boolean inSet = sim.searchSet(rand);
             boolean bloomAns = bloomFilter.search(rand);
@@ -56,7 +56,7 @@ public class Main {
             setSize = Integer.parseInt(args[2]);
             numOfSampleRuns = Integer.parseInt(args[3]);
         } else {
-            bfType = "POL";
+            bfType = "OLS";
             //uniSize = 24;
             //setSize = 2;
             numOfSampleRuns = 100;
@@ -185,13 +185,13 @@ public class Main {
                         SetRandomizer(simulation,bf_mols);
                         int num_of_runs_w_FP = 0;
                         for (int i=0; i<numOfSampleRuns; i++){
-                            SampleRandomizer(simulation,bf_mols);
+                            SampleRandomizer(simulation,bf_mols,3);
                             if(simulation.getFalsePositiveCounter() > 0){
                                 num_of_runs_w_FP++;
                             }
                             simulation.falsePositiveCounterInitialize();
                         }
-                        myWriter.write(sampleSize+","+num_of_runs_w_FP+"\n");
+                        myWriter.write(sampleSize+","+(num_of_runs_w_FP)+"\n");
                     }
 
                     myWriter.close();
@@ -270,13 +270,13 @@ public class Main {
                         SetRandomizer(simulation,bf_pol);
                         int num_of_runs_w_FP = 0;
                         for (int i=0; i<numOfSampleRuns; i++){
-                            SampleRandomizer(simulation,bf_pol);
+                            SampleRandomizer(simulation,bf_pol,3);
                             if(simulation.getFalsePositiveCounter() > 0){
                                 num_of_runs_w_FP++;
                             }
                             simulation.falsePositiveCounterInitialize();
                         }
-                        myWriter.write(sampleSize+","+num_of_runs_w_FP+"\n");
+                        myWriter.write(sampleSize+","+(num_of_runs_w_FP)+"\n");
                     }
 
                     myWriter.close();
