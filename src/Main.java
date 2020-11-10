@@ -14,7 +14,7 @@ public class Main {
             int rand = randClass.nextInt(sim.getN());
             sim.insertToUniverse(rand);
             bloomFilter.insert(rand);
-            System.out.println("BF insert: " + rand + "\n");
+            //System.out.println("BF insert: " + rand + "\n");
         }
     }
 
@@ -56,7 +56,7 @@ public class Main {
             setSize = Integer.parseInt(args[2]);
             numOfSampleRuns = Integer.parseInt(args[3]);
         } else {
-            bfType = "OLS";
+            bfType = "POL";
             //uniSize = 24;
             //setSize = 2;
             numOfSampleRuns = 100;
@@ -260,7 +260,7 @@ public class Main {
                     System.out.println("Calculating POL FP01 graph.");
                     FileWriter myWriter = new FileWriter(filePOLFP01Name);
                     myWriter.write("POL\n");
-                    uniSize = 343;
+                    uniSize = 256;
                     int d = 3;
                     myWriter.write("d = "+d+" n = "+uniSize+"\n");
                     for(int sampleSize = 0; sampleSize < 33; sampleSize++){
