@@ -40,7 +40,7 @@ public class Main {
             boolean bloomAns = bloomFilter.search(i);
             if (bloomAns && !inSet) {
                 sim.falsePositiveCounterIncrement();
-                System.out.println("False Positive number: " + i + "\n");
+                //System.out.println("False Positive number: " + i + "\n");
             }
         }
     }
@@ -56,10 +56,10 @@ public class Main {
             setSize = Integer.parseInt(args[2]);
             numOfSampleRuns = Integer.parseInt(args[3]);
         } else {
-            bfType = "OLS";
+            bfType = "POL";
             //uniSize = 24;
             //setSize = 2;
-            numOfSampleRuns = 10;
+            numOfSampleRuns = 100;
         }
         // Printing Parameters
         System.out.println("Running a test with:\n\tBF type\t\t"+bfType);
@@ -69,11 +69,15 @@ public class Main {
         String fileOLSLengthName ="output_for_graphs_ols_length.txt";
         String filePOLFalsePosName ="output_for_graphs_pol_FP.txt";
         String fileOLSFalsePosName ="output_for_graphs_ols_FP.txt";
+        String filePOLFP01Name ="output_for_graphs_pol_FP_01.txt";
+        String fileOLSFP01Name ="output_for_graphs_ols_FP_01.txt";
         try {
             File filePOL = new File(filePOLLengthName);
             File fileOLS = new File(fileOLSLengthName);
             File filePOLFalsePos = new File(filePOLFalsePosName);
             File fileOLSFalsePos = new File(fileOLSFalsePosName);
+            File filePOLFP01 = new File(filePOLFP01Name);
+            File fileOLSFP01 = new File(fileOLSFP01Name);
             if (filePOL.createNewFile()) {
                 System.out.println("File created: " + filePOL.getName());
             } else {
@@ -91,6 +95,16 @@ public class Main {
             }
             if (fileOLSFalsePos.createNewFile()) {
                 System.out.println("File created: " + fileOLSFalsePos.getName());
+            } else {
+                System.out.println("File already exists.");
+            }
+            if (filePOLFP01.createNewFile()) {
+                System.out.println("File created: " + filePOLFP01.getName());
+            } else {
+                System.out.println("File already exists.");
+            }
+            if (fileOLSFP01.createNewFile()) {
+                System.out.println("File created: " + fileOLSFP01.getName());
             } else {
                 System.out.println("File already exists.");
             }
@@ -123,7 +137,7 @@ public class Main {
                 }
 
             }
-        else{
+        else if(false){
                 try {
                     System.out.println("Calculating OLS False Positive graph.");
                     FileWriter myWriter = new FileWriter(fileOLSFalsePosName);
@@ -156,9 +170,37 @@ public class Main {
                     e.printStackTrace();
                 }
             }
+        else {
+                try {
+                    System.out.println("Calculating OLS FP01 graph.");
+                    FileWriter myWriter = new FileWriter(fileOLSFP01Name);
+                    myWriter.write("OLS\n");
+                    uniSize = 256;
+                    int d = 3;
+                    myWriter.write("d = "+d+" n = "+uniSize+"\n");
+                    for(int sampleSize = 0; sampleSize < 33; sampleSize++){
+                        System.out.println("Insert "+sampleSize+" elements to BF.");
+                        BFOLS bf_mols = new BFOLS(uniSize ,d);
+                        simulation = new Simulation(uniSize, d, sampleSize);
+                        SetRandomizer(simulation,bf_mols);
+                        int num_of_runs_w_FP = 0;
+                        for (int i=0; i<numOfSampleRuns; i++){
+                            SampleRandomizer(simulation,bf_mols);
+                            if(simulation.getFalsePositiveCounter() > 0){
+                                num_of_runs_w_FP++;
+                            }
+                            simulation.falsePositiveCounterInitialize();
+                        }
+                        myWriter.write(sampleSize+","+num_of_runs_w_FP+"\n");
+                    }
 
-
-
+                    myWriter.close();
+                    System.out.println("Successfully wrote to the file.");
+                } catch (IOException e) {
+                    System.out.println("An error occurred.");
+                    e.printStackTrace();
+                }
+            }
         }
         else if(bfType.equals("POL"))
         {
@@ -181,7 +223,7 @@ public class Main {
                     System.out.println("An error occurred.");
                     e.printStackTrace();
                 }
-            }else{
+            }else if(false){
                 try {
                     System.out.println("Calculating POL False Positive graph.");
                     FileWriter myWriter = new FileWriter(filePOLFalsePosName);
@@ -213,7 +255,38 @@ public class Main {
                     System.out.println("An error occurred.");
                     e.printStackTrace();
                 }
+            }else{
+                try {
+                    System.out.println("Calculating POL FP01 graph.");
+                    FileWriter myWriter = new FileWriter(filePOLFP01Name);
+                    myWriter.write("POL\n");
+                    uniSize = 343;
+                    int d = 3;
+                    myWriter.write("d = "+d+" n = "+uniSize+"\n");
+                    for(int sampleSize = 0; sampleSize < 33; sampleSize++){
+                        System.out.println("Insert "+sampleSize+" elements to BF.");
+                        BFPOL bf_pol = new BFPOL(uniSize ,d);
+                        simulation = new Simulation(uniSize, d, sampleSize);
+                        SetRandomizer(simulation,bf_pol);
+                        int num_of_runs_w_FP = 0;
+                        for (int i=0; i<numOfSampleRuns; i++){
+                            SampleRandomizer(simulation,bf_pol);
+                            if(simulation.getFalsePositiveCounter() > 0){
+                                num_of_runs_w_FP++;
+                            }
+                            simulation.falsePositiveCounterInitialize();
+                        }
+                        myWriter.write(sampleSize+","+num_of_runs_w_FP+"\n");
+                    }
+
+                    myWriter.close();
+                    System.out.println("Successfully wrote to the file.");
+                } catch (IOException e) {
+                    System.out.println("An error occurred.");
+                    e.printStackTrace();
+                }
             }
+
 
 
             //BFPOL bf_pol = new BFPOL(361, 3);
