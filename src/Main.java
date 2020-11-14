@@ -56,10 +56,10 @@ public class Main {
             setSize = Integer.parseInt(args[2]);
             numOfSampleRuns = Integer.parseInt(args[3]);
         } else {
-            bfType = "POL";
+            bfType = "OLS";
             //uniSize = 24;
             //setSize = 2;
-            numOfSampleRuns = 100;
+            numOfSampleRuns = 1000;
         }
         // Printing Parameters
         System.out.println("Running a test with:\n\tBF type\t\t"+bfType);
@@ -191,7 +191,8 @@ public class Main {
                             }
                             simulation.falsePositiveCounterInitialize();
                         }
-                        myWriter.write(sampleSize+","+(num_of_runs_w_FP)+"\n");
+                        double percent = (double)num_of_runs_w_FP/numOfSampleRuns;
+                        myWriter.write(sampleSize+","+percent+"\n");
                     }
 
                     myWriter.close();
@@ -276,7 +277,8 @@ public class Main {
                             }
                             simulation.falsePositiveCounterInitialize();
                         }
-                        myWriter.write(sampleSize+","+(num_of_runs_w_FP)+"\n");
+                        double percent = (double)num_of_runs_w_FP/numOfSampleRuns;
+                        myWriter.write(sampleSize+","+percent+"\n");
                     }
 
                     myWriter.close();
@@ -287,24 +289,6 @@ public class Main {
                 }
             }
 
-
-
-            //BFPOL bf_pol = new BFPOL(361, 3);
-            //simulation = new Simulation(uniSize, setSize, 5); //TODO: either add or remove sample size
-            if (false){ //Change if you want to choose the set by yourself
-                // randomly choosing a set, updating simulation and adding to bloom filter
-                //SetRandomizer(simulation,bf_pol);
-            } else {
-                //bf_pol.insert(168);
-                //bf_pol.insert(50);
-            }
-
-            // running all checks
-//            for (int i=0; i<numOfSampleRuns; i++){
-//                ScanUniverseElements(simulation,bf_pol);
-//                simulation.statistics();
-//                simulation.falsePositiveCounterInitialize();
-//            }
         }
 
         System.out.println("\nDone!");
