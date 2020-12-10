@@ -40,19 +40,22 @@ def plotVecSizeByUniSize(d):
     fig = go.Figure()
     fig.add_trace(
         go.Scatter(x=[math.log(x, 2) for x in pol_dict[d]['universeSizeList']], y=pol_dict[d]['bfSize'], name='POL',
-                   line=dict(color='firebrick', width=4)))
+                   line=dict(color='firebrick', width=4, dash='dash')))
+    fig.add_trace(
+        go.Scatter(x=[math.log(x, 2) for x in ols_theory[d]['universeSizeList']], y=ols_theory[d]['bfSize'], name='OLS in theory',
+                   line=dict(color='lightblue', width=4)))
     fig.add_trace(
         go.Scatter(x=[math.log(x, 2) for x in ols_dict[d]['universeSizeList']], y=ols_dict[d]['bfSize'], name='OLS',
-                   line=dict(color='royalblue', width=4, dash='dash')))
-    fig.update_layout(title=f'Maximal Set Size d={d}',
-                      xaxis_title=r"$\text{Universe Size } 2^{x}$",
-                      yaxis_title=r"$\text{Filter Length [bits]}$")
+                   line=dict(color='royalblue', width=4)))
+    # fig.update_layout(title=f'Maximal Set Size d={d}', xaxis_title=r"$\text{Universe Size} 2^{x}$", yaxis_title=r"$\text{Filter Length [bits]}$")
+    fig.update_layout(title=f'Maximal Set Size d={d}', xaxis_title='Universe Size 2^x', yaxis_title='Filter Length [bits]')
     fig.show()
 
 
 if __name__ == "__main__":
     pol_dict = createDictionary("POL")
     ols_dict = createDictionary("OLS")
+    ols_theory = createDictionary("OLS_theory")
 
     for key in pol_dict:
         if key in ols_dict:
